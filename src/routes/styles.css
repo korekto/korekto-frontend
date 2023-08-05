@@ -4,12 +4,18 @@
 	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
 		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	--font-mono: 'Fira Mono', monospace;
-	--color-bg-0: rgb(202, 216, 228);
+	/* Header */
+	--color-bg-0: rgb(0, 0, 0);
+	/* Page */
 	--color-bg-1: hsl(209, 36%, 86%);
-	--color-bg-2: hsl(224, 44%, 95%);
-	--color-theme-1: #ff3e00;
-	--color-theme-2: #4075a6;
+	/* Sidebar */
+	--color-bg-2: #d9d9d9;
+	/* Menu item */
+	--color-bg-3: #989898;
+	--color-theme-1: #4142a6;
+	--color-theme-2: #41a6a4;
 	--color-text: rgba(0, 0, 0, 0.7);
+	--color-text-2: rgba(256, 256, 256, 100%);
 	--column-width: 42rem;
 	--column-margin-top: 4rem;
 	font-family: var(--font-body);
@@ -70,12 +76,10 @@ pre {
 }
 
 .text-column {
-	display: flex;
-	max-width: 48rem;
-	flex: 0.6;
+	flex: 1;
 	flex-direction: column;
 	justify-content: center;
-	margin: 0 auto;
+	padding: 1em;
 }
 
 input,
