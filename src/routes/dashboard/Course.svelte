@@ -1,20 +1,8 @@
 <script>
 	import Icon from '@iconify/svelte';
+	import { jsDateToHumanDate, jsDateToHumanTime } from './../../utils';
 
 	export let course;
-
-	const dateToInternalDate = (x) => {
-		const d = new Date(x);
-		return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
-			d.getDate()
-		).padStart(2, '0')}`;
-	};
-	const dateToInternalTime = (x) => {
-		const d = new Date(x);
-		return `${dateToInternalDate(d)} - ${String(d.getHours() + 1).padStart(2, '0')}:${String(
-			d.getMinutes() + 1
-		).padStart(2, '0')}`;
-	};
 </script>
 
 <a href="/course/{course.id}">
@@ -22,7 +10,7 @@
 		<div class="cell">
 			<div class="title">{course.name}</div>
 			<div class="period disabled">
-				{dateToInternalDate(course.start)} - {dateToInternalDate(course.end)}
+				{jsDateToHumanDate(course.start)} - {jsDateToHumanDate(course.end)}
 			</div>
 		</div>
 		<div class="cell little-cell repos">
@@ -44,7 +32,7 @@
 		<div class="cell big-cell">
 			<div class="inline black text-right">
 				latest update: <span class="bold ml-2"
-					>{dateToInternalTime(course.latest_update)}</span
+					>{jsDateToHumanTime(course.latest_update)}</span
 				>
 			</div>
 		</div>
@@ -98,7 +86,7 @@
 		color: #4b5dff;
 	}
 	.disabled {
-		color: #646d6d;
+		color: #505757;
 	}
 	.inline {
 		display: flex;
