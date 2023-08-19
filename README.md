@@ -40,3 +40,7 @@ You can preview the production build with `npm run preview`.
 ## Seach icons
 
 https://icon-sets.iconify.design/
+
+## D3 scatter graph
+
+https://d3-graph-gallery.com/graph/connectedscatter_basic.html

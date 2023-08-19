@@ -5,7 +5,7 @@
 
 	export let data;
 
-	// get module details using data.id, cf +page.ts
+	// get module details using data.moduleId, cf +page.ts
 	let module = {
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
@@ -40,7 +40,7 @@
 				factor_percentage: 5
 			},
 			{
-                id: '91d607c9-53fa-49d4-877e-412ad4f290fc',
+				id: '91d607c9-53fa-49d4-877e-412ad4f290fc',
 				type: 'exercise',
 				name: 'Maven',
 				description: 'Setup a Maven project with CI',
@@ -59,7 +59,7 @@
 				factor_percentage: 5
 			},
 			{
-                id: '0346ac10-d8fe-4204-bfc2-f7c88c107fd5',
+				id: '0346ac10-d8fe-4204-bfc2-f7c88c107fd5',
 				type: 'project',
 				name: 'Navy battle',
 				description: 'Build a program playing the Navy battle game over an HTTP/JSON API',
