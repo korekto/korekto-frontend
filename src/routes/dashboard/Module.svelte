@@ -2,37 +2,37 @@
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from './../../utils';
 
-	export let course;
+	export let module;
 </script>
 
-<a href="/course/{course.id}">
-	<div class="course">
+<a href="/module/{module.id}">
+	<div class="module">
 		<div class="cell">
-			<div class="title">{course.name}</div>
+			<div class="title">{module.name}</div>
 			<div class="period disabled">
-				{jsDateToHumanDate(course.start)} - {jsDateToHumanDate(course.end)}
+				{jsDateToHumanDate(module.start)} - {jsDateToHumanDate(module.end)}
 			</div>
 		</div>
 		<div class="cell little-cell repos">
 			<div class="inline big blue">
-				{course.user_repos} / {course.repos_to_create}
+				{module.user_repos} / {module.repos_to_create}
 				<Icon icon="mdi:git" inline class="git-icon" />
 			</div>
 		</div>
 		<div class="cell">
 			<div class="inline big bold">
-				{#if course.locked}
+				{#if module.locked}
 					<Icon icon="mingcute:lock-line" class="locked-icon" />
 				{/if}
-				<div class="grade" class:disabled={course.locked}>
-					Grade: {course.grade} / 20
+				<div class="grade" class:disabled={module.locked}>
+					Grade: {module.grade} / 20
 				</div>
 			</div>
 		</div>
 		<div class="cell big-cell">
 			<div class="inline black text-right">
 				latest update: <span class="bold ml-2"
-					>{jsDateToHumanTime(course.latest_update)}</span
+					>{jsDateToHumanTime(module.latest_update)}</span
 				>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 		text-decoration: none;
 		color: inherit;
 	}
-	.course {
+	.module {
 		background-color: var(--color-bg-3);
 		padding: 15px 15px;
 		display: flex;
@@ -54,7 +54,7 @@
 	:global(a + a) {
 		margin-top: 20px;
 	}
-	.course:hover {
+	.module:hover {
 		background-color: var(--color-bg-2);
 		cursor: pointer;
 	}

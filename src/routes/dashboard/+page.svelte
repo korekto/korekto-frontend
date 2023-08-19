@@ -1,7 +1,7 @@
 <script>
-	import Course from './Course.svelte';
+	import Module from './Module.svelte';
 
-	let userCourses = [
+	let userModules = [
 		{
 			id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 			name: 'Java 101',
@@ -29,8 +29,8 @@
 
 <div class="text-column">
 	<div class="panel">
-		{#each userCourses as course}
-			<Course {course} />
+		{#each userModules as module (module.id)}
+			<Module {module} />
 		{/each}
 	</div>
 </div>
