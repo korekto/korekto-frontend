@@ -31,7 +31,7 @@
 			'https://github.com/toto/java_exercise_1/commit/8529f2aaa2d9f8f35a17ae0ac40b240ae6918ad0',
 		latest_run: 'https://github.com/toto/java_exercise_1',
 		latest_run_short_commit_id: '72858c3',
-        latest_run_time: new Date('2023-03-22'),
+		latest_run_time: new Date('2023-03-22'),
 		latest_run_commit_url:
 			'https://github.com/toto/java_exercise_1/commit/72858c3ea42f61aa6913b639f5f51f2dfb17eb89',
 		details: [
@@ -159,32 +159,38 @@
 		</div>
 		{#if assignment.latest_run != undefined}
 			<h3 class="black bold mb-0">Details of latest run:</h3>
-            <ul class="details">
-                {#each assignment.details as detail}
-                    <li>
-                        {#if detail.max_grade === undefined}
-                            {#if detail.grade === 0}
-                                {detail.name}: OK
-                            {:else}
-                                {detail.name}: {detail.grade}
-                            {/if}
-                        {:else}
-                            {detail.name}: {detail.grade} / {detail.max_grade}
-                        {/if}
-                        {#if detail.messages != undefined && detail.grade != 0 }
-                            <ul>
-                                {#each detail.messages as message}
-                                    <li>{message}</li>
-                                {/each}
-                            </ul>
-                        {/if}
-                    </li>
-        		{/each}
-            </ul>
-            <div>
-                Run at <span class="black bold">{jsDateToHumanTime(assignment.latest_run_time)}</span> for commit <a class="link blue" href={assignment.latest_run_commit_url}>{assignment.latest_run_short_commit_id}</a>
-            </div>
-            <div class="disabled mt-1">
+			<ul class="details">
+				{#each assignment.details as detail}
+					<li>
+						{#if detail.max_grade === undefined}
+							{#if detail.grade === 0}
+								{detail.name}: OK
+							{:else}
+								{detail.name}: {detail.grade}
+							{/if}
+						{:else}
+							{detail.name}: {detail.grade} / {detail.max_grade}
+						{/if}
+						{#if detail.messages != undefined && detail.grade != 0}
+							<ul>
+								{#each detail.messages as message}
+									<li>{message}</li>
+								{/each}
+							</ul>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+			<div>
+				Run at <span class="black bold"
+					>{jsDateToHumanTime(assignment.latest_run_time)}</span
+				>
+				for commit
+				<a class="link blue" href={assignment.latest_run_commit_url}
+					>{assignment.latest_run_short_commit_id}</a
+				>
+			</div>
+			<div class="disabled mt-1">
 				<Icon icon="eva:menu-arrow-outline" inline style="transform: rotate(180deg);" />
 				Full log <a class="link blue" href={assignment.latest_run}>here</a>
 			</div>
@@ -247,13 +253,13 @@
 	.icon {
 		padding: 2px;
 	}
-    .details {
-        padding: 15px 40px;
-        background-color: white;
-    }
-    .mt-1 {
-        margin-top: 10px;
-    }
+	.details {
+		padding: 15px 40px;
+		background-color: white;
+	}
+	.mt-1 {
+		margin-top: 10px;
+	}
 	.mb-0 {
 		margin-bottom: 0;
 	}
