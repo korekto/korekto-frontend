@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import Module from './Module.svelte';
+	import type { ModuleType } from './module.type';
 
-	let userModules = [
+	let userModules: ModuleType[] = [
 		{
 			id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 			name: 'Java 101',

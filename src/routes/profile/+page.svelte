@@ -1,29 +1,34 @@
-<script>
+<script lang="ts">
 	import * as yup from 'yup';
+	import type { ProfileInfo } from '$lib/types';
 
-	const regSchema = yup.object().shape({
+	const schema: yup.ObjectSchema<ProfileInfo> = yup.object({
 		firstName: yup.string().required(),
 		lastName: yup.string().required(),
 		schoolClass: yup.string().required(),
 		schoolEmail: yup.string().required().email()
 	});
 
-	const extractErrors = (err) => {
+	interface YupErrors {
+		[key: string]: yup.ValidationError;
+	}
+
+	const extractErrors = (err: yup.ValidationError) => {
 		return err.inner.reduce((acc, err) => {
-			return { ...acc, [err.path]: err.message };
+			return { ...acc, [err.path ?? '']: err.message };
 		}, {});
 	};
 
-	let values = {};
-	let errors = {};
+	let values: ProfileInfo = {};
+	let errors: YupErrors = {};
 	const submitHandler = () => {
-		regSchema
+		schema
 			.validate(values, { abortEarly: false })
 			.then(() => {
 				errors = {};
 				alert(JSON.stringify(values, null, 2));
 			})
-			.catch((err) => (errors = extractErrors(err)));
+			.catch((err: yup.ValidationError) => (errors = extractErrors(err)));
 	};
 </script>
 

@@ -1,23 +1,23 @@
-<script>
+<script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from './../../../../../utils';
+	import type { Assignment } from '$lib/types';
 
 	export let data;
 
 	// get assignment details using data.assignmentId, cf +page.ts
-	let assignment = {
+	let assignment: Assignment = {
 		id: '7857c411-c79c-44d8-98a0-693deba1d77d',
 		type: 'exercise',
 		name: 'Control flow',
 		description: 'Build a CLI program and practice the Open/Close principle',
-		tags: ['Beginner', 'Java', 'control flow'],
 		grade: 0,
 		start: new Date('2023-03-10'),
 		end: new Date('2023-03-14'),
 		repo_created: false,
 		latest_update: new Date('2023-03-22'),
 		locked: false,
-		teacher_notes: null,
+		lock_reason: 'whatever',
 		subject: 'https://github.com/lernejo/exercises/blob/master/java_fr/EXERCISE.adoc',
 		grader: 'https://github.com/lernejo/korekto-java-basics-grader',
 		integration: false,
@@ -225,9 +225,6 @@
 		display: flex;
 		flex-direction: column;
 		font-size: 20px;
-	}
-	.tiny {
-		font-size: 0.85em;
 	}
 	.blue {
 		color: blue;

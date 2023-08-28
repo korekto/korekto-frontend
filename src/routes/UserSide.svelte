@@ -1,26 +1,19 @@
 <script>
-	var offset = Math.floor(Math.random() * 200);
-	var imgIndex = Math.random();
-
-	var user = {
-		name: 'Toto',
-		role: 'Student'
-	};
+	import { getSelf } from '$lib/api';
 </script>
 
 <div class="media align-items-center">
-	<div>
-		<img
-			src={`https://thispersondoesnotexist.com/?rand_number=${imgIndex}`}
-			alt="..."
-			width="65"
-			class="rounded-circle"
-		/>
+	{#await getSelf()}
+		<div class="media-body">Loading</div>
+	{:then user}
+		<img src={user.avatar_url} alt="avatar" width="65" class="rounded-circle" />
 		<div class="media-body">
 			<h4 class="username">{user.name}</h4>
 			<p class="role">{user.role}</p>
 		</div>
-	</div>
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 </div>
 
 <style>
@@ -31,6 +24,7 @@
 	.media {
 		display: flex;
 		margin-top: 50px;
+        flex-direction: column;
 	}
 	.align-items-center {
 		align-items: center;

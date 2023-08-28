@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from './../../utils';
+	import type { ModuleType } from './module.type';
 
-	export let module;
+	export let module: ModuleType;
 </script>
 
 <a href="/module/{module.id}">

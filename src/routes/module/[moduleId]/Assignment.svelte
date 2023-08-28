@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from './../../../utils';
+	import type { AssignmentType } from './assignment.type';
 
-	export let moduleId;
-	export let assignment;
+	export let moduleId: string;
+	export let assignment: AssignmentType;
 </script>
 
 <a href="/module/{moduleId}/assignment/{assignment.id}">
