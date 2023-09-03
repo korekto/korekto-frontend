@@ -91,7 +91,7 @@
 		font-weight: 400;
 		line-height: 1.5;
 		appearance: none;
-		border: 1 solid #dee2e6;
+		border: 1px solid #dee2e6;
 		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 	}
 	button {

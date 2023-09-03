@@ -1,11 +1,20 @@
 import type { User } from './types';
 
+const imgIndex = Math.random();
+
+let self: User = {
+    name: 'Toto',
+    role: 'Student',
+    avatar_url: `https://thispersondoesnotexist.com/?rand_number=${imgIndex}`,
+    admin: false
+}
+
 export const getSelf = () => {
-	var imgIndex = Math.random();
-	const user: User = {
-		name: 'Toto',
-		role: 'Student',
-		avatar_url: `https://thispersondoesnotexist.com/?rand_number=${imgIndex}`
-	};
-	return user;
+    return self;
+};
+
+export const setAdmin = (code: string) => {
+    if(code === "0") {
+        self.admin = true;
+    }
 };

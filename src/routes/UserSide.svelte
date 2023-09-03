@@ -1,19 +1,13 @@
 <script>
-	import { getSelf } from '$lib/api';
+	import { UserStore } from '$lib/stores';
 </script>
 
 <div class="media align-items-center">
-	{#await getSelf()}
-		<div class="media-body">Loading</div>
-	{:then user}
-		<img src={user.avatar_url} alt="avatar" width="65" class="rounded-circle" />
-		<div class="media-body">
-			<h4 class="username">{user.name}</h4>
-			<p class="role">{user.role}</p>
-		</div>
-	{:catch error}
-		<p style="color: red">{error.message}</p>
-	{/await}
+	<img src={$UserStore.avatar_url} alt="avatar" width="65" class="rounded-circle" />
+	<div class="media-body">
+		<h4 class="username">{$UserStore.name}</h4>
+		<p class="role">{$UserStore.role}</p>
+	</div>
 </div>
 
 <style>

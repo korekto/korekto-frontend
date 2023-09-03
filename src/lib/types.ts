@@ -2,6 +2,7 @@ export type User = {
 	name: string;
 	role: string;
 	avatar_url: string;
+    admin: boolean;
 };
 
 export type ProfileInfo = {

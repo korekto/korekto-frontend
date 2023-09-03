@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Header from './Header.svelte';
 	import Sidebar from './Sidebar.svelte';
 	import './styles.css';

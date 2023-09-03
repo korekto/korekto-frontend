@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+    import { UserStore } from '$lib/stores';
 	import Icon from '@iconify/svelte';
 	import UserSide from './UserSide.svelte';
 </script>
@@ -17,6 +18,13 @@
 				<Icon icon="uil:house-user" inline /> Profile
 			</a>
 		</li>
+        {#if $UserStore.admin}
+            <li aria-current={$page.url.pathname === '/profile' ? 'page' : undefined}>
+    			<a href="/profile">
+    				<Icon icon="uil:house-user" inline /> Profile
+    			</a>
+    		</li>
+        {/if}
 	</ul>
 </div>
 
