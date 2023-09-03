@@ -24,7 +24,7 @@
 	.media {
 		display: flex;
 		margin-top: 50px;
-        flex-direction: column;
+		flex-direction: column;
 	}
 	.align-items-center {
 		align-items: center;

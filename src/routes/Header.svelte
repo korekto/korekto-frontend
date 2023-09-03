@@ -9,8 +9,10 @@
 		</a>
 	</div>
 
-	<div class="corner">
-		<a href="/signout"> Sign out </a>
+	<div class="corner center">
+		<form action="/auth/logout" method="post">
+			<button type="submit">Sign out</button>
+		</form>
 	</div>
 </header>
 
@@ -27,7 +29,14 @@
 		height: 3em;
 	}
 
-	.corner a {
+	.center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.corner a,
+	button {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -42,12 +51,19 @@
 		letter-spacing: 0.1em;
 	}
 
+	button {
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+
 	.corner a:visited {
 		text-decoration: none;
 		color: var(--color-text-2);
 	}
 
-	.corner a:hover {
+	.corner a:hover,
+	button:hover {
 		text-decoration: none;
 		color: var(--color-text-2);
 	}
@@ -59,11 +75,13 @@
 		margin-right: 1em;
 	}
 
-	a {
+	a,
+	button {
 		color: var(--color-text-2);
 	}
 
-	a:hover {
+	a:hover,
+	button:hover {
 		color: var(--color-text-2);
 	}
 </style>
