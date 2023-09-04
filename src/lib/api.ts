@@ -13,10 +13,10 @@ export const getSelf = async () => {
 };
 
 export const redeemCode = async (code: string) => {
-    if (dev) {
-        mock.setAdmin(code);
-    } else {
-        await axiosAPI.post('/fapi/settings/redeem_code');
-    }
-    await loadUser();
-}
+	if (dev) {
+		mock.setAdmin(code);
+	} else {
+		await axiosAPI.patch('/fapi/settings/redeem_code', code);
+	}
+	await loadUser();
+};

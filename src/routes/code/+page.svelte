@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { redeemCode } from '$lib/api';
+	import { redeemCode } from '$lib/api';
 
-    export let on_refresh_menu = () => {};
+	export let on_refresh_menu = () => {};
 
 	let code: string | undefined = undefined;
 
 	const submitHandler = async () => {
-        if (code !== undefined) {
-            await redeemCode(code);
-            on_refresh_menu();
-        }
+		if (code !== undefined) {
+			await redeemCode(code);
+			on_refresh_menu();
+		}
 	};
 </script>
 
