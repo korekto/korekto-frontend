@@ -52,3 +52,14 @@ export type Table = {
 	name: string;
 	row_count: number;
 };
+
+export type UserForAdmin = {
+	id: string;
+	created_at: string;
+	provider_login: string;
+	name: string;
+	email: string;
+	teacher: boolean;
+	admin: boolean;
+	selected?: boolean;
+};

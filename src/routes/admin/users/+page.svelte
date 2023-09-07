@@ -1,4 +1,127 @@
+<script lang="ts">
+	import Icon from '@iconify/svelte';
+	import type { UserForAdmin } from '$lib/types';
+	import { getUsers, deleteUsers, setUsersTeacher } from '$lib/api';
+
+	let storedUsers: UserForAdmin[] = [];
+
+	async function getUsersAndStoreThem() {
+		storedUsers = await getUsers();
+		return storedUsers;
+	}
+
+	let getUsersPromise = getUsersAndStoreThem();
+
+	async function bulkDelete() {
+		await bulkDoStuff(deleteUsers);
+	}
+
+	async function bulkSetTeacher() {
+		await bulkDoStuff(setUsersTeacher);
+	}
+
+	async function bulkDoStuff(action: (ids: string[]) => void) {
+		let selectedUsers = storedUsers.filter((u) => u.selected).map((u) => u.id);
+		await action(selectedUsers);
+		getUsersPromise = getUsersAndStoreThem();
+	}
+</script>
+
 <div class="text-column">
-	<h1>Users</h1>
-	<h3>// TODO</h3>
+	<h3>Users</h3>
+
+	{#await getUsersPromise}
+		<p class="p-white">...loading users</p>
+	{:then users}
+		<div class="mb-3 row">
+			<span class="col-sm-1">Bulk actions:</span>
+			<button type="button" on:click={bulkSetTeacher} class="col-sm-1 btn btn-warning"
+				>Set Teacher</button
+			>
+			<button type="button" on:click={bulkDelete} class="col-sm-1 btn btn-danger"
+				>Delete</button
+			>
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col" />
+					<th scope="col">ID</th>
+					<th scope="col">Created at</th>
+					<th scope="col">Login</th>
+					<th scope="col">Name</th>
+					<th scope="col">Email</th>
+					<th scope="col">Teacher</th>
+					<th scope="col">Admin</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each storedUsers as user}
+					<tr>
+						<td><input type="checkbox" bind:checked={user.selected} /></td>
+						<th scope="row">{user.id}</th>
+						<td>{new Date(user.created_at).toLocaleDateString()}</td>
+						<td>{user.provider_login}</td>
+						<td>{user.name}</td>
+						<td>{user.email || '-'}</td>
+						<td>
+							{#if user.teacher}
+								<Icon icon="ph:check-fill" inline />
+							{/if}
+						</td>
+						<td>
+							{#if user.admin}
+								<Icon icon="ph:check-fill" inline />
+							{/if}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 </div>
+
+<style>
+	table {
+		width: 100%;
+		margin-bottom: 1rem;
+		vertical-align: top;
+		border-color: #df00a9;
+		caption-side: bottom;
+		border-collapse: collapse;
+	}
+
+	tbody,
+	td,
+	th,
+	thead,
+	tr {
+		border-color: inherit;
+		border-style: solid;
+		border-width: 0;
+		vertical-align: bottom;
+	}
+
+	table > thead {
+		vertical-align: bottom;
+	}
+
+	th {
+		text-align: inherit;
+	}
+
+	table > :not(caption) > * > * {
+		padding: 0.5rem 0.5rem;
+		color: initial;
+		background-color: white;
+		border-bottom-width: 1px;
+		box-shadow: inset 0 0 0 9999px initial;
+	}
+
+	table > tbody > tr:nth-of-type(2n + 1) > * {
+		background-color: #f0f8ff;
+	}
+</style>
