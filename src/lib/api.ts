@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 import { axiosAPI } from './axios';
-import type { User } from './types';
+import type { User, Table } from './types';
 import * as mock from './mock';
 import { loadUser } from './stores';
 
@@ -19,4 +19,12 @@ export const redeemCode = async (code: string) => {
 		await axiosAPI.patch('/fapi/settings/redeem_code', code);
 	}
 	await loadUser();
+};
+
+export const getTables = async () => {
+	if (dev) {
+		return mock.getTables();
+	} else {
+        return await axiosAPI.get<Table[]>('/fapi/admin/table').then((res) => res.data);
+	}
 };

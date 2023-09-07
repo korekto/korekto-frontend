@@ -47,3 +47,8 @@ export type Details = {
 	max_grade?: number;
 	messages?: string[];
 };
+
+export type Table = {
+	name: string;
+	row_count: number;
+};

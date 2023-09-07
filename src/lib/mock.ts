@@ -1,4 +1,4 @@
-import type { User } from './types';
+import type { User, Table } from './types';
 
 const imgIndex = Math.random();
 
@@ -17,4 +17,17 @@ export const setAdmin = (code: string) => {
 	if (code === '0') {
 		self.admin = true;
 	}
+};
+
+export const getTables = () => {
+	let tables: Table[] = [];
+	tables.push({
+		name: 'table_1',
+		row_count: 4
+	});
+	tables.push({
+		name: 'table_2',
+		row_count: 13
+	});
+	return tables;
 };
