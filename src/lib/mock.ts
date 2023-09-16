@@ -1,6 +1,21 @@
-import type { User, Table, UserForAdmin } from './types';
+import type {
+	User,
+	Table,
+	UserForAdmin,
+	TeacherModuleDesc,
+	TeacherModule,
+	TeacherModuleForm,
+	DeleteTeacherAssignmentsRequest,
+	TeacherAssignment,
+	TeacherAssignmentForm,
+	TeacherAssignmentDesc
+} from './types';
 
 const imgIndex = Math.random();
+
+function uuidv4() {
+	return crypto.randomUUID();
+}
 
 let users: UserForAdmin[] = [
 	{
@@ -23,44 +38,175 @@ let users: UserForAdmin[] = [
 	}
 ];
 
-export const getSelf = () => {
+let modules: TeacherModuleBacked[] = [
+	{
+		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
+		name: 'Java 101',
+		start: '2023-09-14T08:00',
+		end: '2023-09-28T20:00',
+		unlock_key: 'vdjjgvdjhbd-jhbd-65545khbd',
+		assignments: []
+	},
+	{
+		id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
+		name: 'Java 201',
+		start: '2023-09-14T08:00',
+		end: '2023-09-28T20:00',
+		unlock_key: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
+		assignments: []
+	}
+];
+
+export const getSelf = (): User => {
 	let backed_user = users[0];
-	let self: User = {
+	return {
 		name: backed_user.name,
 		role: backed_user.teacher ? 'Teacher' : backed_user.admin ? 'Admin' : 'Student',
 		avatar_url: `https://thispersondoesnotexist.com/?rand_number=${imgIndex}`,
-		admin: backed_user.admin
+		admin: backed_user.admin,
+		teacher: backed_user.teacher
 	};
-	return self;
 };
 
-export const setAdmin = (code: string) => {
+export const setAdmin = (code: string): void => {
 	if (code === '0') {
 		users[0].admin = true;
 	}
 };
 
-export const getTables = () => {
-	let tables: Table[] = [];
-	tables.push({
-		name: 'table_1',
-		row_count: 4
-	});
-	tables.push({
-		name: 'table_2',
-		row_count: 13
-	});
-	return tables;
+export const getTables = (): Table[] => {
+	return [
+		{
+			name: 'table_1',
+			row_count: 4
+		},
+		{
+			name: 'table_2',
+			row_count: 13
+		}
+	];
 };
 
-export const getUsers = () => {
+export const getUsers = (): UserForAdmin[] => {
 	return users;
 };
 
-export const deleteUsers = (ids: string[]) => {
+export const deleteUsers = (ids: string[]): void => {
 	users = users.filter((u) => !ids.includes(u.id));
 };
 
-export const setUsersTeacher = (ids: string[]) => {
+export const setUsersTeacher = (ids: string[]): void => {
 	users.filter((u) => ids.includes(u.id)).forEach((u) => (u.teacher = true));
+};
+
+export const getTeacherModules = (): TeacherModuleDesc[] => {
+	return modules.map((m: TeacherModuleBacked) => ({
+		id: m.id || '',
+		name: m.name || '',
+		start: m.start || '',
+		end: m.end || '',
+		assignment_count: m.assignments.length
+	}));
+};
+
+export const getTeacherModule = (id: string): TeacherModule => {
+	return modules.filter((m) => m.id === id).map(teacherModuleBacked_to_teacherModule)[0];
+};
+
+const teacherModuleBacked_to_teacherModule = (m: TeacherModuleBacked): TeacherModule => {
+	return {
+		...m,
+		assignments: m.assignments.map(assignment_to_assignmentDesc)
+	};
+};
+
+const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAssignmentDesc => {
+	return {
+		id: assignment.id!,
+		type: assignment.type!,
+		name: assignment.name!,
+		start: assignment.start!,
+		end: assignment.end!,
+		factor_percentage: assignment.factor_percentage!
+	};
+};
+
+export const createTeacherModule = (module_form: TeacherModuleForm): TeacherModule => {
+	let id = uuidv4();
+	let module = {
+		...module_form,
+		id: id,
+		assignments: []
+	};
+	modules.push(module);
+	return module;
+};
+
+export const updateTeacherModule = (
+	module_id: String,
+	module_form: TeacherModuleForm
+): TeacherModule => {
+	const index = modules.findIndex(({ id }) => id === module_id);
+	let updated_module = {
+		...modules[index],
+		...module_form
+	};
+	modules[index] = updated_module;
+	return teacherModuleBacked_to_teacherModule(updated_module);
+};
+
+export const updateTeacherAssignment = (
+	module_id: string,
+	assignment_id: string,
+	assignment: TeacherAssignmentForm
+): TeacherAssignment => {
+	let module = modules.filter((m) => m.id === module_id)[0];
+	const index = module.assignments.findIndex(({ id }) => id === assignment_id);
+	let updated_assignment = {
+		...module.assignments[index],
+		...assignment
+	};
+	module.assignments[index] = updated_assignment;
+	return updated_assignment;
+};
+
+export const deleteTeacherModules = (ids: string[]): void => {
+	modules = modules.filter((m) => !ids.includes(m.id!));
+};
+
+export const deleteTeacherAssignments = (req: DeleteTeacherAssignmentsRequest): void => {
+	let module = modules.filter((m) => m.id === req.module_id)[0];
+	module.assignments = module.assignments.filter((a) => !req.assignment_ids.includes(a.id!));
+};
+
+export const createTeacherAssignment = (
+	module_id: string,
+	assignment_form: TeacherAssignmentForm
+): TeacherAssignment => {
+	let id = uuidv4();
+	let assignment = {
+		...assignment_form,
+		id: id
+	};
+	let module = modules.filter((m) => m.id === module_id)[0];
+	module.assignments.push(assignment);
+	return assignment;
+};
+
+export const getTeacherAssignment = (
+	module_id: string,
+	assignment_id: string
+): TeacherAssignment => {
+	return modules
+		.filter((m) => m.id === module_id)[0]
+		.assignments.filter((a) => a.id === assignment_id)[0];
+};
+
+type TeacherModuleBacked = {
+	id?: string;
+	name?: string;
+	start?: string | Date;
+	end?: string | Date;
+	unlock_key?: string;
+	assignments: TeacherAssignment[];
 };

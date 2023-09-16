@@ -3,6 +3,7 @@ export type User = {
 	role: string;
 	avatar_url: string;
 	admin: boolean;
+	teacher: boolean;
 };
 
 export type ProfileInfo = {
@@ -12,7 +13,7 @@ export type ProfileInfo = {
 	schoolEmail?: string;
 };
 
-export type Assignment = {
+export type StudentAssignment = {
 	id: string;
 	type: string;
 	name: string;
@@ -62,4 +63,69 @@ export type UserForAdmin = {
 	teacher: boolean;
 	admin: boolean;
 	selected?: boolean;
+};
+
+export type TeacherModuleDesc = {
+	id: string;
+	name: string;
+	start: string | Date;
+	end: string | Date;
+	assignment_count: number;
+};
+
+export type TeacherModule = {
+	id?: string;
+	name?: string;
+	start?: string | Date;
+	end?: string | Date;
+	unlock_key?: string;
+	assignments: TeacherAssignmentDesc[];
+};
+
+export type TeacherModuleForm = {
+	name?: string;
+	start?: string | Date;
+	end?: string | Date;
+	unlock_key?: string;
+};
+
+export type TeacherAssignmentDesc = {
+	id: string;
+	type: string;
+	name: string;
+	start: string | Date;
+	end: string | Date;
+	factor_percentage: number;
+};
+
+export type DeleteTeacherAssignmentsRequest = {
+	module_id: string;
+	assignment_ids: string[];
+};
+
+export type TeacherAssignment = {
+	id?: string;
+	type?: string;
+	name?: string;
+	start?: string | Date;
+	end?: string | Date;
+	description?: string;
+	subject_url?: string;
+	grader_url?: string;
+	repository_name?: string;
+	factor_percentage?: number;
+	grader_run_url?: string;
+};
+
+export type TeacherAssignmentForm = {
+	type?: string;
+	name?: string;
+	start?: string | Date;
+	end?: string | Date;
+	description?: string;
+	subject_url?: string;
+	grader_url?: string;
+	repository_name?: string;
+	factor_percentage?: number;
+	grader_run_url?: string;
 };

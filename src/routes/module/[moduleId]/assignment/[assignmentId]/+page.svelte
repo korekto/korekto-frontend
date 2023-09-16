@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { jsDateToHumanDate, jsDateToHumanTime } from './../../../../../utils';
-	import type { Assignment } from '$lib/types';
+	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
+	import type { StudentAssignment } from '$lib/types';
 
 	export let data;
 
 	// get assignment details using data.assignmentId, cf +page.ts
-	let assignment: Assignment = {
+	let assignment: StudentAssignment = {
 		id: '7857c411-c79c-44d8-98a0-693deba1d77d',
 		type: 'exercise',
 		name: 'Control flow',

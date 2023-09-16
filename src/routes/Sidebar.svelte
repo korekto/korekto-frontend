@@ -25,6 +25,13 @@
 				</a>
 			</li>
 		{/if}
+		{#if $UserStore.teacher}
+			<li aria-current={$page.url.pathname === '/teacher' ? 'page' : undefined}>
+				<a href="/teacher">
+					<Icon icon="la:chalkboard-teacher" inline /> Teacher
+				</a>
+			</li>
+		{/if}
 	</ul>
 </div>
 

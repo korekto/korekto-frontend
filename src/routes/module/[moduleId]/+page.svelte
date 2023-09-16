@@ -1,7 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import Assignment from './Assignment.svelte';
-	import { jsDateToHumanDate, jsDateToHumanTime } from './../../../utils';
+	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
 
 	export let data;
 

@@ -1,0 +1,10 @@
+.row {
+	display: flex;
+}
+.row + .row {
+	margin-top: 20px;
+}
+.col-auto {
+	flex: 0 0 auto;
+	width: auto;
+}

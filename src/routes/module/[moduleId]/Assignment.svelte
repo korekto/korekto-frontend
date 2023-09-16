@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { jsDateToHumanDate, jsDateToHumanTime } from './../../../utils';
+	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
 	import type { AssignmentType } from './assignment.type';
 
 	export let moduleId: string;
