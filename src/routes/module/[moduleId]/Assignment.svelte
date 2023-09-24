@@ -48,7 +48,7 @@
 				<Icon icon="clarity:clock-line" inline style="font-size: 24px;" />
 				<div class="column ml-1">
 					<div>From: {jsDateToHumanDate(assignment.start)}</div>
-					<div>To: <span class="bold">{jsDateToHumanTime(assignment.end)}</span></div>
+					<div>To: <span class="bold">{jsDateToHumanTime(assignment.stop)}</span></div>
 				</div>
 			</div>
 		</div>

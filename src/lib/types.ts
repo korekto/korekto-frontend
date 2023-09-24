@@ -19,10 +19,10 @@ export type StudentAssignment = {
 	name: string;
 	description: string;
 	grade: number;
-	start: string | Date;
-	end: string | Date;
+	start: string;
+	stop: string;
 	repo_created: boolean;
-	latest_update: string | Date;
+	latest_update: string;
 	locked: boolean;
 	lock_reason: string;
 	subject: string;
@@ -37,7 +37,7 @@ export type StudentAssignment = {
 	current_run_commit_url: string;
 	latest_run: string;
 	latest_run_short_commit_id: string;
-	latest_run_time: string | Date;
+	latest_run_time: string;
 	latest_run_commit_url: string;
 	details: Details[];
 };
@@ -68,24 +68,24 @@ export type UserForAdmin = {
 export type TeacherModuleDesc = {
 	id: string;
 	name: string;
-	start: string | Date;
-	end: string | Date;
+	start: string;
+	stop: string;
 	assignment_count: number;
 };
 
 export type TeacherModule = {
 	id?: string;
 	name?: string;
-	start?: string | Date;
-	end?: string | Date;
+	start?: string;
+	stop?: string;
 	unlock_key?: string;
 	assignments: TeacherAssignmentDesc[];
 };
 
 export type TeacherModuleForm = {
 	name?: string;
-	start?: string | Date;
-	end?: string | Date;
+	start?: string;
+	stop?: string;
 	unlock_key?: string;
 };
 
@@ -93,8 +93,8 @@ export type TeacherAssignmentDesc = {
 	id: string;
 	type: string;
 	name: string;
-	start: string | Date;
-	end: string | Date;
+	start: string;
+	stop: string;
 	factor_percentage: number;
 };
 
@@ -107,8 +107,8 @@ export type TeacherAssignment = {
 	id?: string;
 	type?: string;
 	name?: string;
-	start?: string | Date;
-	end?: string | Date;
+	start?: string;
+	stop?: string;
 	description?: string;
 	subject_url?: string;
 	grader_url?: string;
@@ -120,8 +120,8 @@ export type TeacherAssignment = {
 export type TeacherAssignmentForm = {
 	type?: string;
 	name?: string;
-	start?: string | Date;
-	end?: string | Date;
+	start?: string;
+	stop?: string;
 	description?: string;
 	subject_url?: string;
 	grader_url?: string;

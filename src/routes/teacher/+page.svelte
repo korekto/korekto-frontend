@@ -34,7 +34,7 @@
 					<th scope="col">ID</th>
 					<th scope="col">Name</th>
 					<th scope="col">Start</th>
-					<th scope="col">End</th>
+					<th scope="col">Stop</th>
 					<th scope="col">Assignment count</th>
 				</tr>
 			</thead>
@@ -45,7 +45,7 @@
 						<th scope="row"><a href="/teacher/module/{module.id}">{module.id}</a></th>
 						<td><a href="/teacher/module/{module.id}">{module.name}</a></td>
 						<td>{jsDateToHumanDate(module.start)}</td>
-						<td>{jsDateToHumanDate(module.end)}</td>
+						<td>{jsDateToHumanDate(module.stop)}</td>
 						<td>{module.assignment_count}</td>
 					</tr>
 				{/each}

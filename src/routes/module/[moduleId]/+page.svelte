@@ -10,12 +10,12 @@
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
 		description: 'Learn the basics of Java',
-		start: new Date('2023-03-17T07:00:00+00:00'),
-		end: new Date('2023-05-21T17:00:00+00:00'),
+		start: '2023-03-17T07:00:00Z',
+		stop: '2023-05-21T17:00:00Z',
 		repos_to_create: 4,
 		user_repos: 2,
 		grade: 0,
-		latest_update: new Date('2023-03-22'),
+		latest_update: '2023-03-22T17:00:00Z',
 		locked: true,
 		lock_reason: 'Missing profile info',
 		source: 'https://lernejo.github.io/course-java-101-fr',
@@ -27,10 +27,10 @@
 				description: 'Build a CLI program and practice the Open/Close principle',
 				tags: ['Beginner', 'Java', 'control flow'],
 				grade: 0,
-				start: new Date('2023-03-10'),
-				end: new Date('2023-03-14'),
+				start: '2023-03-10T17:00:00Z',
+				stop: '2023-03-14T17:00:00Z',
 				repo_created: false,
-				latest_update: new Date('2023-03-22'),
+				latest_update: '2023-03-22T17:00:00Z',
 				locked: false,
 				teacher_notes: null,
 				subject: 'https://github.com/lernejo/exercises/blob/master/java_fr/EXERCISE.adoc',
@@ -46,10 +46,10 @@
 				description: 'Setup a Maven project with CI',
 				tags: ['Beginner', 'Java', 'Maven', 'Continuous Integration'],
 				grade: 0,
-				start: new Date('2023-03-10'),
-				end: new Date('2023-03-14'),
+				start: '2023-03-10T17:00:00Z',
+				stop: '2023-03-14T17:00:00Z',
 				repo_created: false,
-				latest_update: new Date('2023-03-22'),
+				latest_update: '2023-03-22T17:00:00Z',
 				locked: true,
 				teacher_notes: null,
 				subject: 'https://github.com/lernejo/exercises/blob/master/java_fr/EXERCISE.adoc',
@@ -65,10 +65,10 @@
 				description: 'Build a program playing the Navy battle game over an HTTP/JSON API',
 				tags: [],
 				grade: 4,
-				start: new Date('2023-03-10'),
-				end: new Date('2023-05-23'),
+				start: '2023-03-10T17:00:00Z',
+				stop: '2023-05-23T17:00:00Z',
 				repo_created: true,
-				latest_update: new Date('2023-03-22'),
+				latest_update: '2023-03-22T17:00:00Z',
 				locked: false,
 				teacher_notes: null,
 				subject:
@@ -104,7 +104,7 @@
 				</div>
 				<div class="column">
 					<div>From: {jsDateToHumanDate(module.start)}</div>
-					<div>To: <span class="bold">{jsDateToHumanTime(module.end)}</span></div>
+					<div>To: <span class="bold">{jsDateToHumanTime(module.stop)}</span></div>
 				</div>
 			</div>
 			<div class="row green center-v">

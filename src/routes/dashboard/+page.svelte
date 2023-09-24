@@ -6,23 +6,23 @@
 		{
 			id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 			name: 'Java 101',
-			start: new Date('2023-03-10'),
-			end: new Date('2023-05-21'),
+			start: '2023-03-10T14:05:44Z',
+			stop: '2023-05-21T14:05:44Z',
 			repos_to_create: 4,
 			user_repos: 2,
 			grade: 0,
-			latest_update: new Date('2023-03-22'),
+			latest_update: '2023-03-22T14:05:44Z',
 			locked: true
 		},
 		{
 			id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
 			name: 'Java 201',
-			start: new Date('2023-03-10'),
-			end: new Date('2023-05-21'),
+			start: '2023-03-10T14:05:44Z',
+			stop: '2023-05-21T14:05:44Z',
 			repos_to_create: 4,
 			user_repos: 2,
 			grade: 6,
-			latest_update: new Date('2023-03-22'),
+			latest_update: '2023-03-22T14:05:44Z',
 			locked: false
 		}
 	];

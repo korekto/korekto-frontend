@@ -51,7 +51,7 @@
 					<th scope="col">Type</th>
 					<th scope="col">Name</th>
 					<th scope="col">Start</th>
-					<th scope="col">End</th>
+					<th scope="col">Stop</th>
 					<th scope="col">Factor</th>
 				</tr>
 			</thead>
@@ -77,7 +77,7 @@
 							></td
 						>
 						<td>{jsDateToHumanDate(assignment.start)}</td>
-						<td>{jsDateToHumanDate(assignment.end)}</td>
+						<td>{jsDateToHumanDate(assignment.stop)}</td>
 						<td>{assignment.factor_percentage} %</td>
 					</tr>
 				{/each}

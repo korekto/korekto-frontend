@@ -12,7 +12,7 @@
 	const schema: yup.ObjectSchema<TeacherModuleForm> = yup.object({
 		name: yup.string().required(),
 		start: yup.string().required(),
-		end: yup.string().required(),
+		stop: yup.string().required(),
 		unlock_key: yup.string().required()
 	});
 
@@ -39,9 +39,9 @@
 		{#if errors.start}<div class="error">Required</div>{/if}
 	</div>
 	<div class="row">
-		<label class="col-input" for="end">End</label>
-		<input class="col-auto" type="datetime-local" id="end" bind:value={form.values.end} />
-		{#if errors.end}<div class="error">Required</div>{/if}
+		<label class="col-input" for="stop">Stop</label>
+		<input class="col-auto" type="datetime-local" id="stop" bind:value={form.values.stop} />
+		{#if errors.stop}<div class="error">Required</div>{/if}
 	</div>
 	<div class="row">
 		<label class="col-input" for="schoolEmail">Unlock key</label>

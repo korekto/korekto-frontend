@@ -5,10 +5,10 @@ export type AssignmentType = {
 	description: string;
 	tags: string[];
 	grade: number;
-	start: string | Date;
-	end: string | Date;
+	start: string;
+	stop: string;
 	repo_created: boolean;
-	latest_update: string | Date;
+	latest_update: string;
 	locked: boolean;
 	subject: string;
 	grader: string;

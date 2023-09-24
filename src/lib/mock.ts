@@ -20,7 +20,7 @@ function uuidv4() {
 let users: UserForAdmin[] = [
 	{
 		id: '42',
-		created_at: '2023-03-10',
+		created_at: '2023-03-10T14:05:44Z',
 		provider_login: 'toto',
 		name: 'Toto',
 		email: 'toto@titi.com',
@@ -29,7 +29,7 @@ let users: UserForAdmin[] = [
 	},
 	{
 		id: '43',
-		created_at: '2023-03-10',
+		created_at: '2023-03-10T14:05:44Z',
 		provider_login: 'titi',
 		name: 'Titi',
 		email: 'titi@titi.com',
@@ -42,16 +42,16 @@ let modules: TeacherModuleBacked[] = [
 	{
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
-		start: '2023-09-14T08:00',
-		end: '2023-09-28T20:00',
+		start: '2023-09-14T14:05:44Z',
+		stop: '2023-09-28T20:00:44Z',
 		unlock_key: 'vdjjgvdjhbd-jhbd-65545khbd',
 		assignments: []
 	},
 	{
 		id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
 		name: 'Java 201',
-		start: '2023-09-14T08:00',
-		end: '2023-09-28T20:00',
+		start: '2023-09-14T14:05:44Z',
+		stop: '2023-09-28T14:05:44Z',
 		unlock_key: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		assignments: []
 	}
@@ -104,7 +104,7 @@ export const getTeacherModules = (): TeacherModuleDesc[] => {
 		id: m.id || '',
 		name: m.name || '',
 		start: m.start || '',
-		end: m.end || '',
+		stop: m.stop || '',
 		assignment_count: m.assignments.length
 	}));
 };
@@ -126,7 +126,7 @@ const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAss
 		type: assignment.type!,
 		name: assignment.name!,
 		start: assignment.start!,
-		end: assignment.end!,
+		stop: assignment.stop!,
 		factor_percentage: assignment.factor_percentage!
 	};
 };
@@ -205,8 +205,8 @@ export const getTeacherAssignment = (
 type TeacherModuleBacked = {
 	id?: string;
 	name?: string;
-	start?: string | Date;
-	end?: string | Date;
+	start?: string;
+	stop?: string;
 	unlock_key?: string;
 	assignments: TeacherAssignment[];
 };

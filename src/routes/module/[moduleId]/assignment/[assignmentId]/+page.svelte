@@ -12,10 +12,10 @@
 		name: 'Control flow',
 		description: 'Build a CLI program and practice the Open/Close principle',
 		grade: 0,
-		start: new Date('2023-03-10'),
-		end: new Date('2023-03-14'),
+		start: '2023-03-10T17:00:00Z',
+		stop: '2023-03-14T17:00:00Z',
 		repo_created: false,
-		latest_update: new Date('2023-03-22'),
+		latest_update: '2023-03-22T17:00:00Z',
 		locked: false,
 		lock_reason: 'whatever',
 		subject: 'https://github.com/lernejo/exercises/blob/master/java_fr/EXERCISE.adoc',
@@ -31,7 +31,7 @@
 			'https://github.com/toto/java_exercise_1/commit/8529f2aaa2d9f8f35a17ae0ac40b240ae6918ad0',
 		latest_run: 'https://github.com/toto/java_exercise_1',
 		latest_run_short_commit_id: '72858c3',
-		latest_run_time: new Date('2023-03-22'),
+		latest_run_time: '2023-03-22T17:00:00Z',
 		latest_run_commit_url:
 			'https://github.com/toto/java_exercise_1/commit/72858c3ea42f61aa6913b639f5f51f2dfb17eb89',
 		details: [
@@ -89,7 +89,7 @@
 				</div>
 				<div class="column">
 					<div>From: {jsDateToHumanDate(assignment.start)}</div>
-					<div>To: <span class="bold">{jsDateToHumanTime(assignment.end)}</span></div>
+					<div>To: <span class="bold">{jsDateToHumanTime(assignment.stop)}</span></div>
 				</div>
 			</div>
 			<div class="row black center-v">

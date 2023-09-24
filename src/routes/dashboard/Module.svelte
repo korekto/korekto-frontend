@@ -11,7 +11,7 @@
 		<div class="cell">
 			<div class="title">{module.name}</div>
 			<div class="period disabled">
-				{jsDateToHumanDate(module.start)} - {jsDateToHumanDate(module.end)}
+				{jsDateToHumanDate(module.start)} - {jsDateToHumanDate(module.stop)}
 			</div>
 		</div>
 		<div class="cell little-cell repos">
