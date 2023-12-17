@@ -3,6 +3,7 @@
 	import type { TeacherAssignment, TeacherAssignmentForm } from '$lib/types';
 	import { createHeadlessForm } from '$lib/form';
 	import type { YupErrors } from '$lib/form';
+	import { DateInput } from 'date-picker-svelte';
 	import '$css/form.css';
 	import '$css/grid.css';
 
@@ -50,12 +51,12 @@
 	</div>
 	<div class="row">
 		<label class="col-input" for="start">Start</label>
-		<input class="col-auto" type="datetime-local" id="start" bind:value={form.values.start} />
+		<DateInput class="col-auto" id="start" bind:value={form.values.start} />
 		{#if errors.start}<div class="error">Required</div>{/if}
 	</div>
 	<div class="row">
 		<label class="col-input" for="stop">Stop</label>
-		<input class="col-auto" type="datetime-local" id="stop" bind:value={form.values.stop} />
+		<DateInput class="col-auto" id="stop" bind:value={form.values.stop} />
 		{#if errors.stop}<div class="error">Required</div>{/if}
 	</div>
 	<div class="row">

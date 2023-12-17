@@ -76,16 +76,16 @@ export type TeacherModuleDesc = {
 export type TeacherModule = {
 	id?: string;
 	name?: string;
-	start?: string;
-	stop?: string;
+	start?: Date;
+	stop?: Date;
 	unlock_key?: string;
 	assignments: TeacherAssignmentDesc[];
 };
 
 export type TeacherModuleForm = {
 	name?: string;
-	start?: string;
-	stop?: string;
+	start?: Date;
+	stop?: Date;
 	unlock_key?: string;
 };
 
@@ -107,8 +107,8 @@ export type TeacherAssignment = {
 	id?: string;
 	type?: string;
 	name?: string;
-	start?: string;
-	stop?: string;
+	start?: Date;
+	stop?: Date;
 	description?: string;
 	subject_url?: string;
 	grader_url?: string;
@@ -120,8 +120,8 @@ export type TeacherAssignment = {
 export type TeacherAssignmentForm = {
 	type?: string;
 	name?: string;
-	start?: string;
-	stop?: string;
+	start?: Date;
+	stop?: Date;
 	description?: string;
 	subject_url?: string;
 	grader_url?: string;
