@@ -98,11 +98,6 @@ export type TeacherAssignmentDesc = {
 	factor_percentage: number;
 };
 
-export type DeleteTeacherAssignmentsRequest = {
-	module_id: string;
-	assignment_ids: string[];
-};
-
 export type TeacherAssignment = {
 	id?: string;
 	type?: string;

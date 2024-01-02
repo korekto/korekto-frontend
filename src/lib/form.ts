@@ -50,7 +50,7 @@ export const createHeadlessForm = <Values extends yup.AnyObject>(
 	onErrorChange: (err: YupErrors) => void,
 	values: Values
 ): HeadlessForm<Values> => {
-	let errorRef = {
+	const errorRef = {
 		errors: {}
 	};
 	return {

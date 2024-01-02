@@ -5,8 +5,8 @@ import { getSelf } from './api';
 export const UserStore = writable<User>();
 
 export const loadUser = async () => {
-	let user = await getSelf();
-	UserStore.update((currentValue) => {
+	const user = await getSelf();
+	UserStore.update((_currentValue) => {
 		return user;
 	});
 };

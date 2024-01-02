@@ -1,10 +1,6 @@
 import { dev } from '$app/environment';
 import { axiosAPI } from './../axios';
-import type {
-	DeleteTeacherAssignmentsRequest,
-	TeacherAssignmentForm,
-	TeacherAssignment
-} from './../types';
+import type { TeacherAssignmentForm, TeacherAssignment } from './../types';
 import * as mock from './../mock';
 
 export const createTeacherAssignment = async (
@@ -51,17 +47,16 @@ export const updateTeacherAssignment = async (
 };
 
 export const deleteTeacherAssignments = async (module_id: string, assignment_ids: string[]) => {
-	let request: DeleteTeacherAssignmentsRequest = {
-		module_id,
-		assignment_ids
-	};
 	if (dev) {
-		mock.deleteTeacherAssignments(request);
+		mock.deleteTeacherAssignments(module_id, assignment_ids);
 	} else {
 		await axiosAPI({
 			method: 'delete',
-			url: '/fapi/teacher/module',
-			data: request
+			url: `/fapi/teacher/module/${module_id}`,
+			data: JSON.stringify(assignment_ids),
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		});
 	}
 };

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { getTeacherModules, deleteTeacherModules } from '$lib/api';
-	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
+	import { jsDateToHumanDate } from '$lib/utils';
 	import '$css/table.css';
 
 	let selection: string[] = [];

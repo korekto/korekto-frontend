@@ -5,7 +5,6 @@ import type {
 	TeacherModuleDesc,
 	TeacherModule,
 	TeacherModuleForm,
-	DeleteTeacherAssignmentsRequest,
 	TeacherAssignment,
 	TeacherAssignmentForm,
 	TeacherAssignmentDesc
@@ -58,7 +57,7 @@ let modules: TeacherModuleBacked[] = [
 ];
 
 export const getSelf = (): User => {
-	let backed_user = users[0];
+	const backed_user = users[0];
 	return {
 		name: backed_user.name,
 		role: backed_user.teacher ? 'Teacher' : backed_user.admin ? 'Admin' : 'Student',
@@ -122,18 +121,18 @@ const teacherModuleBacked_to_teacherModule = (m: TeacherModuleBacked): TeacherMo
 
 const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAssignmentDesc => {
 	return {
-		id: assignment.id!,
-		type: assignment.type!,
-		name: assignment.name!,
-		start: assignment.start!,
-		stop: assignment.stop!,
-		factor_percentage: assignment.factor_percentage!
+		id: assignment.id ?? 'should be defined',
+		type: assignment.type ?? 'should be defined',
+		name: assignment.name ?? 'should be defined',
+		start: assignment.start ?? 'should be defined',
+		stop: assignment.stop ?? 'should be defined',
+		factor_percentage: assignment.factor_percentage ?? -1
 	};
 };
 
 export const createTeacherModule = (module_form: TeacherModuleForm): TeacherModule => {
-	let id = uuidv4();
-	let module = {
+	const id = uuidv4();
+	const module = {
 		...module_form,
 		id: id,
 		assignments: []
@@ -143,11 +142,11 @@ export const createTeacherModule = (module_form: TeacherModuleForm): TeacherModu
 };
 
 export const updateTeacherModule = (
-	module_id: String,
+	module_id: string,
 	module_form: TeacherModuleForm
 ): TeacherModule => {
 	const index = modules.findIndex(({ id }) => id === module_id);
-	let updated_module = {
+	const updated_module = {
 		...modules[index],
 		...module_form
 	};
@@ -160,9 +159,9 @@ export const updateTeacherAssignment = (
 	assignment_id: string,
 	assignment: TeacherAssignmentForm
 ): TeacherAssignment => {
-	let module = modules.filter((m) => m.id === module_id)[0];
+	const module = modules.filter((m) => m.id === module_id)[0];
 	const index = module.assignments.findIndex(({ id }) => id === assignment_id);
-	let updated_assignment = {
+	const updated_assignment = {
 		...module.assignments[index],
 		...assignment
 	};
@@ -171,24 +170,26 @@ export const updateTeacherAssignment = (
 };
 
 export const deleteTeacherModules = (ids: string[]): void => {
-	modules = modules.filter((m) => !ids.includes(m.id!));
+	modules = modules.filter((m) => !ids.includes(m.id ?? 'should be defined'));
 };
 
-export const deleteTeacherAssignments = (req: DeleteTeacherAssignmentsRequest): void => {
-	let module = modules.filter((m) => m.id === req.module_id)[0];
-	module.assignments = module.assignments.filter((a) => !req.assignment_ids.includes(a.id!));
+export const deleteTeacherAssignments = (module_id: string, assignment_ids: string[]): void => {
+	const module = modules.filter((m) => m.id === module_id)[0];
+	module.assignments = module.assignments.filter(
+		(a) => !assignment_ids.includes(a.id ?? 'should be defined')
+	);
 };
 
 export const createTeacherAssignment = (
 	module_id: string,
 	assignment_form: TeacherAssignmentForm
 ): TeacherAssignment => {
-	let id = uuidv4();
-	let assignment = {
+	const id = uuidv4();
+	const assignment = {
 		...assignment_form,
 		id: id
 	};
-	let module = modules.filter((m) => m.id === module_id)[0];
+	const module = modules.filter((m) => m.id === module_id)[0];
 	module.assignments.push(assignment);
 	return assignment;
 };
@@ -205,8 +206,8 @@ export const getTeacherAssignment = (
 type TeacherModuleBacked = {
 	id?: string;
 	name?: string;
-	start?: string;
-	stop?: string;
+	start?: Date;
+	stop?: Date;
 	unlock_key?: string;
 	assignments: TeacherAssignment[];
 };

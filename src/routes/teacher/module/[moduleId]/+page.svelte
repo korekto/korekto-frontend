@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import type { TeacherModule, TeacherModuleForm } from '$lib/types';
+	import type { TeacherModuleForm } from '$lib/types';
 	import { getTeacherModule, updateTeacherModule, deleteTeacherAssignments } from '$lib/api';
-	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
+	import { jsDateToHumanDate } from '$lib/utils';
 	import Module from './../Module.svelte';
 	import '$css/table.css';
 
