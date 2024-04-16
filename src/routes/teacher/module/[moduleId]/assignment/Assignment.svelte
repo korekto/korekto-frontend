@@ -13,8 +13,8 @@
 	const schema: yup.ObjectSchema<TeacherAssignmentForm> = yup.object({
 		type: yup.string().required(),
 		name: yup.string().required(),
-		start: yup.string().required(),
-		stop: yup.string().required(),
+		start: yup.date().required(),
+		stop: yup.date().required(),
 		description: yup.string().required(),
 		subject_url: yup.string().required(),
 		grader_url: yup.string().required(),

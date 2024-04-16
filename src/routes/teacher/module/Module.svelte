@@ -12,8 +12,8 @@
 
 	const schema: yup.ObjectSchema<TeacherModuleForm> = yup.object({
 		name: yup.string().required(),
-		start: yup.string().required(),
-		stop: yup.string().required(),
+		start: yup.date().required(),
+		stop: yup.date().required(),
 		unlock_key: yup.string().required()
 	});
 

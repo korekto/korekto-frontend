@@ -1,25 +1,28 @@
 <script lang="ts">
 	import * as yup from 'yup';
+	import { UserStore } from '$lib/stores';
 	import type { ProfileInfo } from '$lib/types';
 	import { createHeadlessForm } from '$lib/form';
 	import type { YupErrors } from '$lib/form';
+	import { saveProfile } from '$lib/api';
+
 	import '$css/form.css';
 	import '$css/grid.css';
 
 	const schema: yup.ObjectSchema<ProfileInfo> = yup.object({
-		firstName: yup.string().required(),
-		lastName: yup.string().required(),
-		schoolClass: yup.string().required(),
-		schoolEmail: yup.string().required().email()
+		firstname: yup.string().required(),
+		lastname: yup.string().required(),
+		school_group: yup.string().required(),
+		school_email: yup.string().required().email()
 	});
 
 	let errors: YupErrors = {};
 
 	const form = createHeadlessForm<ProfileInfo>(
 		schema,
-		(v) => alert(JSON.stringify(v, null, 2)),
+		saveProfile,
 		(err) => (errors = err),
-		{}
+		$UserStore
 	);
 </script>
 
@@ -28,35 +31,40 @@
 
 	<form on:submit|preventDefault={form.submitHandler}>
 		<div class="row">
-			<label class="col-input" for="firstName">First name</label>
-			<input class="col-auto" type="text" id="firstName" bind:value={form.values.firstName} />
-			{#if errors.firstName}<div class="error">Required</div>
-				>{/if}
-		</div>
-		<div class="row">
-			<label class="col-input" for="lastName">Last name</label>
-			<input class="col-auto" type="text" id="lastName" bind:value={form.values.lastName} />
-			{#if errors.lastName}<div class="error">Required</div>{/if}
-		</div>
-		<div class="row">
-			<label class="col-input" for="schoolClass">Class</label>
+			<label class="col-input" for="firstname">Firstname</label>
 			<input
 				class="col-auto"
 				type="text"
-				id="schoolClass"
-				bind:value={form.values.schoolClass}
+				id="firstname"
+				bind:value={form.values.firstname}
 			/>
-			{#if errors.schoolClass}<div class="error">Required</div>{/if}
+			{#if errors.first_name}<div class="error">Required</div>
+				>{/if}
 		</div>
 		<div class="row">
-			<label class="col-input" for="schoolEmail">School email</label>
+			<label class="col-input" for="lastname">Lastname</label>
+			<input class="col-auto" type="text" id="lastname" bind:value={form.values.lastname} />
+			{#if errors.lastname}<div class="error">Required</div>{/if}
+		</div>
+		<div class="row">
+			<label class="col-input" for="school_group">Class</label>
+			<input
+				class="col-auto"
+				type="text"
+				id="school_group"
+				bind:value={form.values.school_group}
+			/>
+			{#if errors.school_group}<div class="error">Required</div>{/if}
+		</div>
+		<div class="row">
+			<label class="col-input" for="school_email">School email</label>
 			<input
 				class="col-auto"
 				type="email"
-				id="schoolEmail"
-				bind:value={form.values.schoolEmail}
+				id="school_email"
+				bind:value={form.values.school_email}
 			/>
-			{#if errors.schoolEmail}<div class="error">Invalid</div>{/if}
+			{#if errors.school_email}<div class="error">Invalid</div>{/if}
 		</div>
 		<div class="row">
 			<div class="col-input" />

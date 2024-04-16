@@ -10,10 +10,10 @@ export type User = {
 };
 
 export type ProfileInfo = {
-	firstName?: string;
-	lastName?: string;
-	schoolClass?: string;
-	schoolEmail?: string;
+	firstname?: string;
+	lastname?: string;
+	school_email?: string;
+	school_group?: string;
 };
 
 export type StudentAssignment = {
@@ -65,7 +65,7 @@ export type UserForAdmin = {
 	lastname: string;
 	school_group: string;
 	school_email: string;
-	email: string;
+	provider_email: string;
 	teacher: boolean;
 	admin: boolean;
 	selected?: boolean;

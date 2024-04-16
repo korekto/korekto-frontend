@@ -7,7 +7,8 @@ import type {
 	TeacherModuleForm,
 	TeacherAssignment,
 	TeacherAssignmentForm,
-	TeacherAssignmentDesc
+	TeacherAssignmentDesc,
+	ProfileInfo
 } from './types';
 
 const imgIndex = Math.random();
@@ -25,7 +26,7 @@ let users: UserForAdmin[] = [
 		lastname: 'Toto',
 		school_group: 'AB43',
 		school_email: 'toto@myschool.com',
-		email: 'toto@titi.com',
+		provider_email: 'toto@titi.com',
 		teacher: false,
 		admin: false
 	},
@@ -37,7 +38,7 @@ let users: UserForAdmin[] = [
 		lastname: 'Titi',
 		school_group: 'AB43',
 		school_email: 'titi@myschool.com',
-		email: 'titi@titi.com',
+		provider_email: 'titi@titi.com',
 		teacher: false,
 		admin: false
 	}
@@ -47,16 +48,16 @@ let modules: TeacherModuleBacked[] = [
 	{
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
-		start: '2023-09-14T14:05:44Z',
-		stop: '2023-09-28T20:00:44Z',
+		start: new Date('2023-09-14T14:05:44Z'),
+		stop: new Date('2023-09-28T20:00:44Z'),
 		unlock_key: 'vdjjgvdjhbd-jhbd-65545khbd',
 		assignments: []
 	},
 	{
 		id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
 		name: 'Java 201',
-		start: '2023-09-14T14:05:44Z',
-		stop: '2023-09-28T14:05:44Z',
+		start: new Date('2023-09-14T14:05:44Z'),
+		stop: new Date('2023-09-28T14:05:44Z'),
 		unlock_key: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		assignments: []
 	}
@@ -74,6 +75,15 @@ export const getSelf = (): User => {
 		admin: backed_user.admin,
 		teacher: backed_user.teacher
 	};
+};
+
+export const updateProfile = (profile: ProfileInfo): ProfileInfo => {
+	const backed_user = users[0];
+	backed_user.first_name = profile.first_name || '';
+	backed_user.last_name = profile.last_name || '';
+	backed_user.school_group = profile.school_group || '';
+	backed_user.school_email = profile.school_email || '';
+	return profile;
 };
 
 export const setAdmin = (code: string): void => {
@@ -111,8 +121,8 @@ export const getTeacherModules = (): TeacherModuleDesc[] => {
 	return modules.map((m: TeacherModuleBacked) => ({
 		id: m.id || '',
 		name: m.name || '',
-		start: m.start || '',
-		stop: m.stop || '',
+		start: (m.start || new Date()).toLocaleString(),
+		stop: (m.stop || new Date()).toLocaleString(),
 		assignment_count: m.assignments.length
 	}));
 };
@@ -133,8 +143,8 @@ const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAss
 		id: assignment.id ?? 'should be defined',
 		type: assignment.type ?? 'should be defined',
 		name: assignment.name ?? 'should be defined',
-		start: assignment.start ?? 'should be defined',
-		stop: assignment.stop ?? 'should be defined',
+		start: assignment.start?.toLocaleDateString() ?? 'should be defined',
+		stop: assignment.stop?.toLocaleDateString() ?? 'should be defined',
 		factor_percentage: assignment.factor_percentage ?? -1
 	};
 };

@@ -51,8 +51,11 @@
 					<th scope="col">ID</th>
 					<th scope="col">Created at</th>
 					<th scope="col">Login</th>
-					<th scope="col">Name</th>
-					<th scope="col">Email</th>
+					<th scope="col">First name</th>
+					<th scope="col">Last name</th>
+					<th scope="col">School group</th>
+					<th scope="col">School email</th>
+					<th scope="col">Provider Email</th>
 					<th scope="col">Teacher</th>
 					<th scope="col">Admin</th>
 				</tr>
@@ -64,8 +67,11 @@
 						<th scope="row">{user.id}</th>
 						<td>{new Date(user.created_at).toLocaleDateString()}</td>
 						<td>{user.provider_login}</td>
-						<td>{user.name}</td>
-						<td>{user.email || '-'}</td>
+						<td>{user.firstname}</td>
+						<td>{user.lastname}</td>
+						<td>{user.school_group || '-'}</td>
+						<td>{user.school_email || '-'}</td>
+						<td>{user.provider_email || '-'}</td>
 						<td>
 							{#if user.teacher}
 								<Icon icon="ph:check-fill" inline />
