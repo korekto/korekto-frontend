@@ -21,7 +21,10 @@ let users: UserForAdmin[] = [
 		id: '42',
 		created_at: '2023-03-10T14:05:44Z',
 		provider_login: 'toto',
-		name: 'Toto',
+		firstname: 'Mr',
+		lastname: 'Toto',
+		school_group: 'AB43',
+		school_email: 'toto@myschool.com',
 		email: 'toto@titi.com',
 		teacher: false,
 		admin: false
@@ -30,7 +33,10 @@ let users: UserForAdmin[] = [
 		id: '43',
 		created_at: '2023-03-10T14:05:44Z',
 		provider_login: 'titi',
-		name: 'Titi',
+		firstname: 'Mr',
+		lastname: 'Titi',
+		school_group: 'AB43',
+		school_email: 'titi@myschool.com',
 		email: 'titi@titi.com',
 		teacher: false,
 		admin: false
@@ -59,7 +65,10 @@ let modules: TeacherModuleBacked[] = [
 export const getSelf = (): User => {
 	const backed_user = users[0];
 	return {
-		name: backed_user.name,
+		firstname: backed_user.firstname,
+		lastname: backed_user.lastname,
+		school_group: backed_user.school_group,
+		school_email: backed_user.school_email,
 		role: backed_user.teacher ? 'Teacher' : backed_user.admin ? 'Admin' : 'Student',
 		avatar_url: `https://thispersondoesnotexist.com/?rand_number=${imgIndex}`,
 		admin: backed_user.admin,

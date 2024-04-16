@@ -1,5 +1,8 @@
 export type User = {
-	name: string;
+	firstname: string;
+	lastname: string;
+	school_group: string;
+	school_email: string;
 	role: string;
 	avatar_url: string;
 	admin: boolean;
@@ -58,7 +61,10 @@ export type UserForAdmin = {
 	id: string;
 	created_at: string;
 	provider_login: string;
-	name: string;
+	firstname: string;
+	lastname: string;
+	school_group: string;
+	school_email: string;
 	email: string;
 	teacher: boolean;
 	admin: boolean;

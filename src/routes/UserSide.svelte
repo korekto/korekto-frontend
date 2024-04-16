@@ -5,7 +5,7 @@
 <div class="media align-items-center">
 	<img src={$UserStore.avatar_url} alt="avatar" width="65" class="rounded-circle" />
 	<div class="media-body">
-		<h4 class="username">{$UserStore.name}</h4>
+		<h4 class="username">{$UserStore.firstname} {$UserStore.lastname}</h4>
 		<p class="role">{$UserStore.role}</p>
 	</div>
 </div>
