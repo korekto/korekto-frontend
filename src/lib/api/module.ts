@@ -1,10 +1,9 @@
-import { dev } from '$app/environment';
 import { axiosAPI } from './../axios';
 import type { TeacherModuleDesc, TeacherModule, TeacherModuleForm } from './../types';
 import * as mock from './../mock';
 
 export const getTeacherModules = async (): Promise<TeacherModuleDesc[]> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.getTeacherModules();
 	} else {
 		return await axiosAPI
@@ -14,7 +13,7 @@ export const getTeacherModules = async (): Promise<TeacherModuleDesc[]> => {
 };
 
 export const createTeacherModule = async (module: TeacherModuleForm): Promise<TeacherModule> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.createTeacherModule(module);
 	} else {
 		return await axiosAPI
@@ -24,7 +23,7 @@ export const createTeacherModule = async (module: TeacherModuleForm): Promise<Te
 };
 
 export const getTeacherModule = async (id: string): Promise<TeacherModule> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.getTeacherModule(id);
 	} else {
 		return await axiosAPI
@@ -37,7 +36,7 @@ export const updateTeacherModule = async (
 	module_id: string,
 	module: TeacherModuleForm
 ): Promise<TeacherModule> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.updateTeacherModule(module_id, module);
 	} else {
 		return await axiosAPI
@@ -47,7 +46,7 @@ export const updateTeacherModule = async (
 };
 
 export const deleteTeacherModules = async (ids: string[]) => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		mock.deleteTeacherModules(ids);
 	} else {
 		await axiosAPI({

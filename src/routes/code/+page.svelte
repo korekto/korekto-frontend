@@ -3,7 +3,7 @@
 	import '$css/form.css';
 	import '$css/grid.css';
 
-	export let on_refresh_menu = () => {};
+	export let on_refresh_menu = () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
 	let code: string | undefined = undefined;
 

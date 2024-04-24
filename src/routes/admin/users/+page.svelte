@@ -21,7 +21,7 @@
 		await bulkDoStuff(setUsersTeacher);
 	}
 
-	async function bulkDoStuff(action: (ids: string[]) => void) {
+	async function bulkDoStuff(action: (ids: string[]) => Promise<void>) {
 		let selectedUsers = storedUsers.filter((u) => u.selected).map((u) => u.id);
 		await action(selectedUsers);
 		getUsersPromise = getUsersAndStoreThem();
@@ -33,6 +33,7 @@
 
 	{#await getUsersPromise}
 		<p class="p-white">...loading users</p>
+		<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 	{:then users}
 		<div class="mb-3 row">
 			<span class="col-sm-1">Bulk actions:</span>

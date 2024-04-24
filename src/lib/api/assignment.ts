@@ -1,4 +1,3 @@
-import { dev } from '$app/environment';
 import { axiosAPI } from './../axios';
 import type { TeacherAssignmentForm, TeacherAssignment } from './../types';
 import * as mock from './../mock';
@@ -7,7 +6,7 @@ export const createTeacherAssignment = async (
 	module_id: string,
 	assignment: TeacherAssignmentForm
 ): Promise<TeacherAssignment> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.createTeacherAssignment(module_id, assignment);
 	} else {
 		return await axiosAPI
@@ -20,7 +19,7 @@ export const getTeacherAssignment = async (
 	module_id: string,
 	assignment_id: string
 ): Promise<TeacherAssignment> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.getTeacherAssignment(module_id, assignment_id);
 	} else {
 		return await axiosAPI
@@ -34,7 +33,7 @@ export const updateTeacherAssignment = async (
 	assignment_id: string,
 	assignment: TeacherAssignmentForm
 ): Promise<TeacherAssignment> => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		return mock.updateTeacherAssignment(module_id, assignment_id, assignment);
 	} else {
 		return await axiosAPI
@@ -47,7 +46,7 @@ export const updateTeacherAssignment = async (
 };
 
 export const deleteTeacherAssignments = async (module_id: string, assignment_ids: string[]) => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		mock.deleteTeacherAssignments(module_id, assignment_ids);
 	} else {
 		await axiosAPI({

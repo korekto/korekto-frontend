@@ -3,7 +3,7 @@
 	import Assignment from './Assignment.svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
 
-	export let data;
+	export let data; // eslint-disable-line svelte/valid-compile
 
 	// get module details using data.moduleId, cf +page.ts
 	let module = {

@@ -32,12 +32,7 @@
 	<form on:submit|preventDefault={form.submitHandler}>
 		<div class="row">
 			<label class="col-input" for="firstname">Firstname</label>
-			<input
-				class="col-auto"
-				type="text"
-				id="firstname"
-				bind:value={form.values.firstname}
-			/>
+			<input class="col-auto" type="text" id="firstname" bind:value={form.values.firstname} />
 			{#if errors.first_name}<div class="error">Required</div>
 				>{/if}
 		</div>

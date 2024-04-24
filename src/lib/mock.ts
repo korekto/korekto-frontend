@@ -79,8 +79,8 @@ export const getSelf = (): User => {
 
 export const updateProfile = (profile: ProfileInfo): ProfileInfo => {
 	const backed_user = users[0];
-	backed_user.first_name = profile.first_name || '';
-	backed_user.last_name = profile.last_name || '';
+	backed_user.firstname = profile.firstname || '';
+	backed_user.lastname = profile.lastname || '';
 	backed_user.school_group = profile.school_group || '';
 	backed_user.school_email = profile.school_email || '';
 	return profile;

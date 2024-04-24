@@ -20,10 +20,12 @@ axiosAPI.interceptors.response.use(
 const isoDateFormat = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d*)?(?:[-+]\d{2}:?\d{2}|Z)?$/;
 
 function isIsoDateString(value: any): boolean {
+	// eslint-disable-line @typescript-eslint/no-explicit-any
 	return value && typeof value === 'string' && isoDateFormat.test(value);
 }
 
 export function handleDates(body: any) {
+	// eslint-disable-line @typescript-eslint/no-explicit-any
 	if (body === null || body === undefined || typeof body !== 'object') return body;
 
 	for (const key of Object.keys(body)) {

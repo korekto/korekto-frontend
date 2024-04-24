@@ -1,4 +1,3 @@
-import { dev } from '$app/environment';
 import { axiosAPI } from './axios';
 import type { ProfileInfo, User } from './types';
 import * as mock from './mock';
@@ -9,7 +8,8 @@ export * from './api/assignment';
 export * from './api/module';
 
 export const getSelf = async (): Promise<User> => {
-	if (dev) {
+	console.log('MODE: ' + import.meta.env.MODE);
+	if (import.meta.env.MODE === 'development') {
 		return mock.getSelf();
 	} else {
 		return await axiosAPI.get<User>('/fapi/user/self').then((res) => res.data);
@@ -18,7 +18,7 @@ export const getSelf = async (): Promise<User> => {
 
 export const saveProfile = async (profile: ProfileInfo) => {
 	let savedProfile;
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		savedProfile = mock.updateProfile(profile);
 	} else {
 		savedProfile = await axiosAPI
@@ -30,7 +30,7 @@ export const saveProfile = async (profile: ProfileInfo) => {
 };
 
 export const redeemCode = async (code: string) => {
-	if (dev) {
+	if (import.meta.env.MODE === 'development') {
 		mock.setAdmin(code);
 	} else {
 		await axiosAPI.patch('/fapi/settings/redeem_code', code);

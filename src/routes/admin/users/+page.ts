@@ -1,5 +1,3 @@
-import { dev } from '$app/environment';
-
 export const csr = true;
 
 // since there's no dynamic data here, we can prerender

@@ -6,7 +6,7 @@ export const UserStore = writable<User>();
 
 export const loadUser = async () => {
 	const user = await getSelf();
-	UserStore.update((_currentValue) => {
+	UserStore.update(() => {
 		return user;
 	});
 };
