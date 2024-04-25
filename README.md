@@ -1,43 +1,26 @@
-# create-svelte
+# Korekto frontend
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Upgrade nightmare
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Well... the problem is all about how NPM handles things.  
+So when one wants to upgrade dependencies, after pinning the right ones using something like:
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm install -g npm-check-updates
+ncu --color
 ```
 
-## Building
+One should do
 
-To create a production version of your app:
+-   some `package-lock.json` backup
+-   delete `package-lock.json`
+-   delete node_modules/
+-   and only then, try a proper `npm install`
 
-```bash
-npm run build
-```
+Otherwise, NPM will be untangled in dependencies resolution from downloaded or referenced past versions, even if
+relations do not exist in the new ones.
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Seach icons
+## Search icons
 
 https://icon-sets.iconify.design/
 

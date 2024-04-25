@@ -46,7 +46,9 @@
 		background: 0 0;
 		background-color: rgba(0, 0, 0, 0);
 		border: 0;
-		transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		transition:
+			color 0.15s ease-in-out,
+			background-color 0.15s ease-in-out,
 			border-color 0.15s ease-in-out;
 	}
 	.nav-pills .nav-link {
