@@ -1,39 +1,30 @@
-import { axiosAPI } from './axios';
-import type { ProfileInfo, User } from './types';
-import * as mock from './mock';
-import { loadUser } from './stores';
+import * as backend_admin from '$lib/api-backend/admin';
+import * as backend_module from '$lib/api-backend/module';
+import * as backend_teacher_assignment from '$lib/api-backend/teacher_assignment';
+import * as backend_teacher_module from '$lib/api-backend/teacher_module';
+import * as backend_user from '$lib/api-backend/user';
 
-export * from './api/admin';
-export * from './api/assignment';
-export * from './api/module';
+import * as mock_admin from '$lib/api-mock/admin';
+import * as mock_module from '$lib/api-mock/module';
+import * as mock_teacher_assignment from '$lib/api-mock/teacher_assignment';
+import * as mock_teacher_module from '$lib/api-mock/teacher_module';
+import * as mock_user from '$lib/api-mock/user';
 
-export const getSelf = async (): Promise<User> => {
-	console.log('MODE: ' + import.meta.env.MODE);
-	if (import.meta.env.MODE === 'development') {
-		return mock.getSelf();
-	} else {
-		return await axiosAPI.get<User>('/fapi/user/self').then((res) => res.data);
-	}
-};
+const api =
+	import.meta.env.MODE === 'development'
+		? {
+				...mock_admin,
+				...mock_module,
+				...mock_teacher_assignment,
+				...mock_teacher_module,
+				...mock_user
+			}
+		: {
+				...backend_admin,
+				...backend_module,
+				...backend_teacher_assignment,
+				...backend_teacher_module,
+				...backend_user
+			};
 
-export const saveProfile = async (profile: ProfileInfo) => {
-	let savedProfile;
-	if (import.meta.env.MODE === 'development') {
-		savedProfile = mock.updateProfile(profile);
-	} else {
-		savedProfile = await axiosAPI
-			.put<ProfileInfo>('/fapi/user/self', profile)
-			.then((res) => res.data);
-	}
-	await loadUser();
-	return savedProfile;
-};
-
-export const redeemCode = async (code: string) => {
-	if (import.meta.env.MODE === 'development') {
-		mock.setAdmin(code);
-	} else {
-		await axiosAPI.patch('/fapi/settings/redeem_code', code);
-	}
-	await loadUser();
-};
+export default api;

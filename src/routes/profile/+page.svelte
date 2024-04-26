@@ -4,7 +4,7 @@
 	import type { ProfileInfo } from '$lib/types';
 	import { createHeadlessForm } from '$lib/form';
 	import type { YupErrors } from '$lib/form';
-	import { saveProfile } from '$lib/api';
+	import api from '$lib/api';
 
 	import '$css/form.css';
 	import '$css/grid.css';
@@ -20,7 +20,7 @@
 
 	const form = createHeadlessForm<ProfileInfo>(
 		schema,
-		saveProfile,
+		api.saveProfile,
 		(err) => (errors = err),
 		$UserStore
 	);
