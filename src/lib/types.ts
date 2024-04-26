@@ -135,3 +135,14 @@ export type TeacherAssignmentForm = {
 export type ModuleRedeemResponse = {
 	redirect_url?: string;
 };
+
+export type ModuleDesc = {
+	id: string;
+	name: string;
+	start: Date;
+	stop: Date;
+	linked_repo_count: number;
+	assignment_count: number;
+	grade: number;
+	latest_update?: Date;
+};

@@ -1,45 +1,74 @@
 <script lang="ts">
 	import Module from './Module.svelte';
-	import type { ModuleType } from './module.type';
+	import Modal from '$lib/component/Modal.svelte';
+	import '$css/form.css';
+	import '$css/grid.css';
+	import api from '$lib/api';
 
-	let userModules: ModuleType[] = [
-		{
-			id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
-			name: 'Java 101',
-			start: '2023-03-10T14:05:44Z',
-			stop: '2023-05-21T14:05:44Z',
-			repos_to_create: 4,
-			user_repos: 2,
-			grade: 0,
-			latest_update: '2023-03-22T14:05:44Z',
-			locked: true
-		},
-		{
-			id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
-			name: 'Java 201',
-			start: '2023-03-10T14:05:44Z',
-			stop: '2023-05-21T14:05:44Z',
-			repos_to_create: 4,
-			user_repos: 2,
-			grade: 6,
-			latest_update: '2023-03-22T14:05:44Z',
-			locked: false
+	let modulesPromise = api.getModules();
+
+	let redeemKey = '';
+	let redeemModal: Modal;
+	let error: string | null = null;
+
+	const redeemModule = async () => {
+		if (redeemKey !== '') {
+			let resp = await api.redeemModule(redeemKey);
+			if (resp.redirect_url === undefined) {
+				error = 'No matching module';
+			} else {
+				modulesPromise = api.getModules();
+				redeemKey = '';
+				error = null;
+				redeemModal.closeModal();
+			}
 		}
-	];
+	};
 </script>
 
 <div class="text-column">
 	<div class="panel">
-		{#each userModules as module (module.id)}
-			<Module {module} />
-		{/each}
+		{#await modulesPromise}
+			<p class="p-white">...loading</p>
+		{:then modules}
+			{#each modules as module (module.id)}
+				<Module {module} />
+			{/each}
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+		<div class="row-centered">
+			<button on:click={() => redeemModal.openModal()}>Redeem a new module</button>
+		</div>
 	</div>
 </div>
+
+<Modal bind:this={redeemModal}>
+	<div class="row">
+		<label class="col-input" for="key">Unlock key</label>
+		<input class="col-auto" type="text" id="key" bind:value={redeemKey} />
+		{#if error}
+			<div class="error">{error}</div>
+		{/if}
+	</div>
+	<div class="row-centered">
+		<button on:click={redeemModule}>Redeem a new module</button>
+	</div>
+</Modal>
 
 <style>
 	.panel {
 		display: flex;
 		flex-direction: column;
 		padding: 100px;
+	}
+
+	button {
+		display: block;
+		margin-top: 15px;
+	}
+
+	input {
+		width: 32em;
 	}
 </style>

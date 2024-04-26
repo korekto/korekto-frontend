@@ -11,8 +11,8 @@ export const getTeacherModules = async (): Promise<TeacherModuleDesc[]> => {
 	return mock.modules.map((m: mock.TeacherModuleBacked) => ({
 		id: m.id || '',
 		name: m.name || '',
-		start: (m.start || new Date()).toLocaleString(),
-		stop: (m.stop || new Date()).toLocaleString(),
+		start: (m.start || new Date()).toISOString(),
+		stop: (m.stop || new Date()).toISOString(),
 		assignment_count: m.assignments.length
 	}));
 };
@@ -46,8 +46,8 @@ const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAss
 		id: assignment.id ?? 'should be defined',
 		type: assignment.type ?? 'should be defined',
 		name: assignment.name ?? 'should be defined',
-		start: assignment.start?.toLocaleDateString() ?? 'should be defined',
-		stop: assignment.stop?.toLocaleDateString() ?? 'should be defined',
+		start: assignment.start?.toISOString() ?? 'should be defined',
+		stop: assignment.stop?.toISOString() ?? 'should be defined',
 		factor_percentage: assignment.factor_percentage ?? -1
 	};
 };

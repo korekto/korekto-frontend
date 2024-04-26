@@ -66,7 +66,7 @@
 					<tr>
 						<td><input type="checkbox" bind:checked={user.selected} /></td>
 						<th scope="row">{user.id}</th>
-						<td>{new Date(user.created_at).toLocaleDateString()}</td>
+						<td>{new Date(user.created_at).toISOString()}</td>
 						<td>{user.provider_login}</td>
 						<td>{user.firstname}</td>
 						<td>{user.lastname}</td>

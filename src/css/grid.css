@@ -8,3 +8,13 @@
 	flex: 0 0 auto;
 	width: auto;
 }
+
+.row-centered {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+hr {
+	width: 100%;
+}
