@@ -1,16 +1,16 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { getTeacherModules, deleteTeacherModules } from '$lib/api';
+	import api from '$lib/api';
 	import { jsDateToHumanDate } from '$lib/utils';
 	import '$css/table.css';
 
 	let selection: string[] = [];
 
-	let teacherModulesPromise = getTeacherModules();
+	let teacherModulesPromise = api.getTeacherModules();
 
 	async function bulkDelete() {
-		await deleteTeacherModules(selection);
-		teacherModulesPromise = getTeacherModules();
+		await api.deleteTeacherModules(selection);
+		teacherModulesPromise = api.getTeacherModules();
 	}
 </script>
 

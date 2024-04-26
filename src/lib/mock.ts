@@ -1,23 +1,10 @@
-import type {
-	User,
-	Table,
-	UserForAdmin,
-	TeacherModuleDesc,
-	TeacherModule,
-	TeacherModuleForm,
-	TeacherAssignment,
-	TeacherAssignmentForm,
-	TeacherAssignmentDesc,
-	ProfileInfo
-} from './types';
+import type { UserForAdmin, TeacherAssignment } from './types';
 
-const imgIndex = Math.random();
-
-function uuidv4() {
+export const uuidv4 = () => {
 	return crypto.randomUUID();
-}
+};
 
-let users: UserForAdmin[] = [
+export let users: UserForAdmin[] = [
 	{
 		id: '42',
 		created_at: '2023-03-10T14:05:44Z',
@@ -28,7 +15,8 @@ let users: UserForAdmin[] = [
 		school_email: 'toto@myschool.com',
 		provider_email: 'toto@titi.com',
 		teacher: false,
-		admin: false
+		admin: false,
+		modules: []
 	},
 	{
 		id: '43',
@@ -40,11 +28,12 @@ let users: UserForAdmin[] = [
 		school_email: 'titi@myschool.com',
 		provider_email: 'titi@titi.com',
 		teacher: false,
-		admin: false
+		admin: false,
+		modules: []
 	}
 ];
 
-let modules: TeacherModuleBacked[] = [
+export let modules: TeacherModuleBacked[] = [
 	{
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
@@ -63,129 +52,8 @@ let modules: TeacherModuleBacked[] = [
 	}
 ];
 
-export const getSelf = (): User => {
-	const backed_user = users[0];
-	return {
-		firstname: backed_user.firstname,
-		lastname: backed_user.lastname,
-		school_group: backed_user.school_group,
-		school_email: backed_user.school_email,
-		role: backed_user.teacher ? 'Teacher' : backed_user.admin ? 'Admin' : 'Student',
-		avatar_url: `https://thispersondoesnotexist.com/?rand_number=${imgIndex}`,
-		admin: backed_user.admin,
-		teacher: backed_user.teacher
-	};
-};
-
-export const updateProfile = (profile: ProfileInfo): ProfileInfo => {
-	const backed_user = users[0];
-	backed_user.firstname = profile.firstname || '';
-	backed_user.lastname = profile.lastname || '';
-	backed_user.school_group = profile.school_group || '';
-	backed_user.school_email = profile.school_email || '';
-	return profile;
-};
-
-export const setAdmin = (code: string): void => {
-	if (code === '0') {
-		users[0].admin = true;
-	}
-};
-
-export const getTables = (): Table[] => {
-	return [
-		{
-			name: 'table_1',
-			row_count: 4
-		},
-		{
-			name: 'table_2',
-			row_count: 13
-		}
-	];
-};
-
-export const getUsers = (): UserForAdmin[] => {
-	return users;
-};
-
 export const deleteUsers = (ids: string[]): void => {
 	users = users.filter((u) => !ids.includes(u.id));
-};
-
-export const setUsersTeacher = (ids: string[]): void => {
-	users.filter((u) => ids.includes(u.id)).forEach((u) => (u.teacher = true));
-};
-
-export const getTeacherModules = (): TeacherModuleDesc[] => {
-	return modules.map((m: TeacherModuleBacked) => ({
-		id: m.id || '',
-		name: m.name || '',
-		start: (m.start || new Date()).toLocaleString(),
-		stop: (m.stop || new Date()).toLocaleString(),
-		assignment_count: m.assignments.length
-	}));
-};
-
-export const getTeacherModule = (id: string): TeacherModule => {
-	return modules.filter((m) => m.id === id).map(teacherModuleBacked_to_teacherModule)[0];
-};
-
-const teacherModuleBacked_to_teacherModule = (m: TeacherModuleBacked): TeacherModule => {
-	return {
-		...m,
-		assignments: m.assignments.map(assignment_to_assignmentDesc)
-	};
-};
-
-const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAssignmentDesc => {
-	return {
-		id: assignment.id ?? 'should be defined',
-		type: assignment.type ?? 'should be defined',
-		name: assignment.name ?? 'should be defined',
-		start: assignment.start?.toLocaleDateString() ?? 'should be defined',
-		stop: assignment.stop?.toLocaleDateString() ?? 'should be defined',
-		factor_percentage: assignment.factor_percentage ?? -1
-	};
-};
-
-export const createTeacherModule = (module_form: TeacherModuleForm): TeacherModule => {
-	const id = uuidv4();
-	const module = {
-		...module_form,
-		id: id,
-		assignments: []
-	};
-	modules.push(module);
-	return module;
-};
-
-export const updateTeacherModule = (
-	module_id: string,
-	module_form: TeacherModuleForm
-): TeacherModule => {
-	const index = modules.findIndex(({ id }) => id === module_id);
-	const updated_module = {
-		...modules[index],
-		...module_form
-	};
-	modules[index] = updated_module;
-	return teacherModuleBacked_to_teacherModule(updated_module);
-};
-
-export const updateTeacherAssignment = (
-	module_id: string,
-	assignment_id: string,
-	assignment: TeacherAssignmentForm
-): TeacherAssignment => {
-	const module = modules.filter((m) => m.id === module_id)[0];
-	const index = module.assignments.findIndex(({ id }) => id === assignment_id);
-	const updated_assignment = {
-		...module.assignments[index],
-		...assignment
-	};
-	module.assignments[index] = updated_assignment;
-	return updated_assignment;
 };
 
 export const deleteTeacherModules = (ids: string[]): void => {
@@ -199,30 +67,7 @@ export const deleteTeacherAssignments = (module_id: string, assignment_ids: stri
 	);
 };
 
-export const createTeacherAssignment = (
-	module_id: string,
-	assignment_form: TeacherAssignmentForm
-): TeacherAssignment => {
-	const id = uuidv4();
-	const assignment = {
-		...assignment_form,
-		id: id
-	};
-	const module = modules.filter((m) => m.id === module_id)[0];
-	module.assignments.push(assignment);
-	return assignment;
-};
-
-export const getTeacherAssignment = (
-	module_id: string,
-	assignment_id: string
-): TeacherAssignment => {
-	return modules
-		.filter((m) => m.id === module_id)[0]
-		.assignments.filter((a) => a.id === assignment_id)[0];
-};
-
-type TeacherModuleBacked = {
+export type TeacherModuleBacked = {
 	id?: string;
 	name?: string;
 	start?: Date;

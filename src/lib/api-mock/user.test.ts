@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { updateProfile, getSelf } from './mock';
+import { updateProfile, getSelf } from './user';
 
 describe('updateProfile mock api', () => {
 	it('reflects change in self mock api', () => {

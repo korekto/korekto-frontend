@@ -1,24 +1,24 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import type { UserForAdmin } from '$lib/types';
-	import { getUsers, deleteUsers, setUsersTeacher } from '$lib/api';
+	import api from '$lib/api';
 	import '$css/table.css';
 
 	let storedUsers: UserForAdmin[] = [];
 
 	async function getUsersAndStoreThem() {
-		storedUsers = await getUsers();
+		storedUsers = await api.getUsers();
 		return storedUsers;
 	}
 
 	let getUsersPromise = getUsersAndStoreThem();
 
 	async function bulkDelete() {
-		await bulkDoStuff(deleteUsers);
+		await bulkDoStuff(api.deleteUsers);
 	}
 
 	async function bulkSetTeacher() {
-		await bulkDoStuff(setUsersTeacher);
+		await bulkDoStuff(api.setUsersTeacher);
 	}
 
 	async function bulkDoStuff(action: (ids: string[]) => Promise<void>) {

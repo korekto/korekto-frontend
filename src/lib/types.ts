@@ -69,6 +69,7 @@ export type UserForAdmin = {
 	teacher: boolean;
 	admin: boolean;
 	selected?: boolean;
+	modules: string[];
 };
 
 export type TeacherModuleDesc = {
@@ -129,4 +130,8 @@ export type TeacherAssignmentForm = {
 	repository_name?: string;
 	factor_percentage?: number;
 	grader_run_url?: string;
+};
+
+export type ModuleRedeemResponse = {
+	redirect_url?: string;
 };
