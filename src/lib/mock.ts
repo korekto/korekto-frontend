@@ -33,21 +33,61 @@ export let users: UserForAdmin[] = [
 	}
 ];
 
+export const module_not_found: TeacherModuleBacked = {
+	id: 'not found',
+	name: 'not found',
+	start: new Date(0),
+	stop: new Date(0),
+	unlock_key: '-5454285417_46795412354554_47',
+	assignments: []
+};
+
 export let modules: TeacherModuleBacked[] = [
 	{
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
 		start: new Date('2023-09-14T14:05:44Z'),
 		stop: new Date('2023-09-28T20:00:44Z'),
-		unlock_key: 'vdjjgvdjhbd-jhbd-65545khbd',
-		assignments: []
+		unlock_key: '0',
+		assignments: [
+			{
+				id: '1234',
+				type: 'exercise',
+				name: 'Java basics',
+				start: new Date('2023-09-14T14:05:44Z'),
+				stop: new Date('2023-09-28T20:00:44Z'),
+				description: 'Learn the basics of Java syntax',
+				subject_url: 'toto',
+				grader_url: 'toto',
+				repository_name: 'toto',
+				factor_percentage: 10,
+				grader_run_url: 'toto',
+				linked: true,
+				grade: 12.3
+			},
+			{
+				id: '4567',
+				type: 'exercise',
+				name: 'Maven training',
+				start: new Date('2023-09-14T14:05:44Z'),
+				stop: new Date('2023-09-28T20:00:44Z'),
+				description: 'Learn to setup a Maven project',
+				subject_url: 'toto',
+				grader_url: 'toto',
+				repository_name: 'toto',
+				factor_percentage: 15,
+				grader_run_url: 'toto',
+				linked: false,
+				grade: 0
+			}
+		]
 	},
 	{
 		id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
 		name: 'Java 201',
 		start: new Date('2023-09-14T14:05:44Z'),
 		stop: new Date('2023-09-28T14:05:44Z'),
-		unlock_key: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
+		unlock_key: '1',
 		assignments: []
 	}
 ];
@@ -73,5 +113,12 @@ export type TeacherModuleBacked = {
 	start?: Date;
 	stop?: Date;
 	unlock_key?: string;
-	assignments: TeacherAssignment[];
+	assignments: AssignmentBacked[];
 };
+
+export type AssignmentState = {
+	linked: boolean;
+	grade: number;
+};
+
+export type AssignmentBacked = TeacherAssignment & AssignmentState;

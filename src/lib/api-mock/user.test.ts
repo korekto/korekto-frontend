@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { updateProfile, getSelf } from './user';
 
 describe('updateProfile mock api', () => {
-	it('reflects change in self mock api', () => {
+	it('reflects change in self mock api', async () => {
 		updateProfile({
 			firstname: 'test 1234',
 			lastname: 'something',
@@ -10,7 +10,7 @@ describe('updateProfile mock api', () => {
 			school_email: 'toto@test.org'
 		});
 
-		expect(getSelf()).toEqual({
+		expect(await getSelf()).toEqual({
 			admin: false,
 			avatar_url: expect.any(String),
 			firstname: 'test 1234',

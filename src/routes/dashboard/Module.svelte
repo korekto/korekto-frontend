@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
-	import type { ModuleType } from './module.type';
+	import type { ModuleDesc } from '$lib/types';
 
-	export let module: ModuleType;
+	export let module: ModuleDesc;
 </script>
 
 <a href="/module/{module.id}">
@@ -11,21 +11,24 @@
 		<div class="cell">
 			<div class="title">{module.name}</div>
 			<div class="period disabled">
-				{jsDateToHumanDate(module.start)} - {jsDateToHumanDate(module.stop)}
+				{jsDateToHumanDate(module.start.toISOString())} - {jsDateToHumanDate(
+					module.stop.toISOString()
+				)}
 			</div>
 		</div>
 		<div class="cell little-cell repos">
 			<div class="inline big blue">
-				{module.user_repos} / {module.repos_to_create}
+				{module.linked_repo_count} / {module.assignment_count}
 				<Icon icon="mdi:git" inline class="git-icon" />
 			</div>
 		</div>
 		<div class="cell">
 			<div class="inline big bold">
-				{#if module.locked}
+				<!--{#if module.locked}
 					<Icon icon="mingcute:lock-line" class="locked-icon" />
-				{/if}
-				<div class="grade" class:disabled={module.locked}>
+				{/if}-->
+				<!--     class:disabled={module.locked} -->
+				<div class="grade">
 					Grade: {module.grade} / 20
 				</div>
 			</div>
@@ -33,7 +36,9 @@
 		<div class="cell big-cell">
 			<div class="inline black text-right">
 				latest update: <span class="bold ml-2"
-					>{jsDateToHumanTime(module.latest_update)}</span
+					>{module.latest_update !== undefined
+						? jsDateToHumanTime(module.latest_update.toISOString())
+						: '-'}</span
 				>
 			</div>
 		</div>
