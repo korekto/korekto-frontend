@@ -47,10 +47,10 @@
 	<div class="row">
 		<label class="col-input" for="key">Unlock key</label>
 		<input class="col-auto" type="text" id="key" bind:value={redeemKey} />
-		{#if error}
-			<div class="error">{error}</div>
-		{/if}
 	</div>
+	{#if error}
+		<div class="row error">{error}</div>
+	{/if}
 	<div class="row-centered">
 		<button on:click={redeemModule}>Redeem a new module</button>
 	</div>
