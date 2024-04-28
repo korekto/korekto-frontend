@@ -11,7 +11,7 @@ import * as mock_teacher_module from '$lib/api-mock/teacher_module';
 import * as mock_user from '$lib/api-mock/user';
 
 const api =
-	import.meta.env.MODE === 'development'
+	import.meta.env.VITE_MOCK_MODE === 'true'
 		? {
 				...mock_admin,
 				...mock_module,

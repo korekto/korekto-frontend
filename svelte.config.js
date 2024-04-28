@@ -17,6 +17,10 @@ const config = {
 		alias: {
 			$css: 'src/css'
 		}
+	},
+
+	compilerOptions: {
+		enableSourcemap: true
 	}
 };
 
