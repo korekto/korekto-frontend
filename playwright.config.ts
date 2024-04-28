@@ -9,7 +9,8 @@ const config: PlaywrightTestConfig = {
 		}
 	],
 	webServer: {
-		command: 'npm run build -- --mode development && npm run preview',
+		command:
+			'cross-env VITE_MOCK_MODE=true npm run build -- --mode development && cross-env VITE_MOCK_MODE=true npm run preview',
 		port: 4173
 	},
 	testDir: 'tests',

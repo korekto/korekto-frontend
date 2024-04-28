@@ -36,7 +36,7 @@
 		<div class="cell big-cell">
 			<div class="inline black text-right">
 				latest update: <span class="bold ml-2"
-					>{module.latest_update !== undefined
+					>{module.latest_update
 						? jsDateToHumanTime(module.latest_update.toISOString())
 						: '-'}</span
 				>
