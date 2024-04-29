@@ -1,4 +1,4 @@
-import type { UserForAdmin, TeacherAssignment } from './types';
+import type { UserForAdmin, TeacherAssignment, UnparseableWebhook } from './types';
 
 export const uuidv4 = () => {
 	return crypto.randomUUID();
@@ -91,6 +91,25 @@ export let modules: TeacherModuleBacked[] = [
 		assignments: []
 	}
 ];
+
+const inOptions: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
+const generateText = (length: number): string => {
+    let text: string = '';
+    for (let i = 0; i < length; i++) {
+        text += inOptions.charAt(Math.floor(Math.random() * inOptions.length));
+    }
+    return text;
+}
+
+export const unparseable_webhooks: UnparseableWebhook[] = new Array(32);
+
+for (let index = 0; index < unparseable_webhooks.length; index++) {
+    const text_length = Math.random() * 170 + 30;
+    const json_value = generateText(text_length)
+    unparseable_webhooks[index] = {
+        index: index, created_at: new Date('2023-09-14T14:05:44Z'), origin: 'github', event: 'machin', payload: `{"big json payload": "${json_value}"}`, error: 'some error'
+    };
+}
 
 export const deleteUsers = (ids: string[]): void => {
 	users = users.filter((u) => !ids.includes(u.id));

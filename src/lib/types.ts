@@ -146,3 +146,20 @@ export type ModuleDesc = {
 	grade: number;
 	latest_update?: Date;
 };
+
+export type Page<T> = {
+    page: number;
+    per_page: number;
+    total_page: number;
+    total_count: number;
+    data: Array<T>;
+}
+
+export type UnparseableWebhook = {
+    index?: number;
+    created_at: Date;
+    origin: string;
+    event: string;
+    payload: string;
+    error: string;
+}
