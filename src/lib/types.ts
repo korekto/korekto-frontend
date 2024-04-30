@@ -144,22 +144,53 @@ export type ModuleDesc = {
 	linked_repo_count: number;
 	assignment_count: number;
 	grade: number;
+	locked: boolean;
 	latest_update?: Date;
 };
 
+export type Module = {
+	id: string;
+	name: string;
+	description: string;
+	start: Date;
+	stop: Date;
+	linked_repo_count: number;
+	grade: number;
+	latest_update?: Date;
+	source: string;
+	locked: boolean;
+	lock_reason?: string;
+	assignments: Array<AssignmentDesc>;
+};
+
+export type AssignmentDesc = {
+	id: string;
+	name: string;
+	description: string;
+	start: Date;
+	stop: Date;
+	type: string;
+	factor_percentage: number;
+	locked: boolean;
+	grade: number;
+	repo_linked: boolean;
+	repository_name: string;
+	subject_url: string;
+};
+
 export type Page<T> = {
-    page: number;
-    per_page: number;
-    total_page: number;
-    total_count: number;
-    data: Array<T>;
-}
+	page: number;
+	per_page: number;
+	total_page: number;
+	total_count: number;
+	data: Array<T>;
+};
 
 export type UnparseableWebhook = {
-    index?: number;
-    created_at: Date;
-    origin: string;
-    event: string;
-    payload: string;
-    error: string;
-}
+	index?: number;
+	created_at: Date;
+	origin: string;
+	event: string;
+	payload: string;
+	error: string;
+};

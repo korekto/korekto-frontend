@@ -18,13 +18,15 @@
 				href="/admin/database">Database</a
 			>
 		</li>
-        <li class="nav-item">
-            <a
-                class="nav-link active"
-                aria-current={$page.url.pathname === '/admin/unparseable_webhooks' ? 'page' : undefined}
-                href="/admin/unparseable_webhooks">Unparseable Webhooks</a
-            >
-        </li>
+		<li class="nav-item">
+			<a
+				class="nav-link active"
+				aria-current={$page.url.pathname === '/admin/unparseable_webhooks'
+					? 'page'
+					: undefined}
+				href="/admin/unparseable_webhooks">Unparseable Webhooks</a
+			>
+		</li>
 	</nav>
 
 	<slot class="content" />

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
-	import type { AssignmentType } from './assignment.type';
+	import type { AssignmentDesc } from '$lib/types';
 
 	export let moduleId: string;
-	export let assignment: AssignmentType;
+	export let assignment: AssignmentDesc;
 </script>
 
 <a href="/module/{moduleId}/assignment/{assignment.id}">
@@ -23,13 +23,7 @@
 			<div class="description disabled">{assignment.description}</div>
 		</div>
 		<div class="cell cell-big">
-			{#if !assignment.integration}
-				<div class="row red">
-					<Icon icon="mdi:git" inline style="font-size: 24px;" />
-					<div>Missing GitHub integration</div>
-				</div>
-			{/if}
-			{#if !assignment.repo_created}
+			{#if !assignment.repo_linked}
 				<div class="row red">
 					<Icon icon="mdi:git" inline style="font-size: 24px;" />
 					<div>Missing repository <i>{assignment.repository_name}</i></div>
@@ -47,8 +41,12 @@
 			<div class="row text-right">
 				<Icon icon="clarity:clock-line" inline style="font-size: 24px;" />
 				<div class="column ml-1">
-					<div>From: {jsDateToHumanDate(assignment.start)}</div>
-					<div>To: <span class="bold">{jsDateToHumanTime(assignment.stop)}</span></div>
+					<div>From: {jsDateToHumanDate(assignment.start.toISOString())}</div>
+					<div>
+						To: <span class="bold"
+							>{jsDateToHumanTime(assignment.stop.toISOString())}</span
+						>
+					</div>
 				</div>
 			</div>
 		</div>

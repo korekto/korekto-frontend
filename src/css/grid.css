@@ -7,7 +7,7 @@
 .col-auto {
 	flex: 0 0 auto;
 	width: auto;
-    flex-direction: column;
+	flex-direction: column;
 }
 
 .row-centered {
