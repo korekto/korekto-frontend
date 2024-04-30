@@ -2,8 +2,9 @@
 	"name": "korekto-frontend",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "cross-env VITE_MOCK_MODE=true vite dev --mode production",
+		"dev": "cross-env VITE_MOCK_MODE=true vite dev",
 		"build": "cross-env VITE_MOCK_MODE=false vite build --mode development",
+		"build:test": "cross-env VITE_MOCK_MODE=true vite build --mode development",
 		"preview": "vite preview",
 		"test": "npm run test:unit && npm run test:integration",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

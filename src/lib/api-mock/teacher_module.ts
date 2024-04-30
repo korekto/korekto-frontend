@@ -8,7 +8,7 @@ import type {
 import * as mock from './../mock';
 
 export const getTeacherModules = async (): Promise<TeacherModuleDesc[]> => {
-	return mock.modules.map((m: mock.TeacherModuleBacked) => ({
+	return mock.modules.map((m: mock.ModuleBacked) => ({
 		id: m.id || '',
 		name: m.name || '',
 		start: (m.start || new Date()).toISOString(),
@@ -24,6 +24,7 @@ export const createTeacherModule = async (
 	const module = {
 		...module_form,
 		id: id,
+		locked: true,
 		assignments: []
 	};
 	mock.modules.push(module);
@@ -34,7 +35,7 @@ export const getTeacherModule = async (id: string): Promise<TeacherModule> => {
 	return mock.modules.filter((m) => m.id === id).map(teacherModuleBacked_to_teacherModule)[0];
 };
 
-const teacherModuleBacked_to_teacherModule = (m: mock.TeacherModuleBacked): TeacherModule => {
+const teacherModuleBacked_to_teacherModule = (m: mock.ModuleBacked): TeacherModule => {
 	return {
 		...m,
 		assignments: m.assignments.map(assignment_to_assignmentDesc)

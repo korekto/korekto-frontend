@@ -14,6 +14,7 @@ export const createTeacherAssignment = async (
 	module.assignments.push({
 		linked: false,
 		grade: 0,
+		locked: true,
 		...assignment
 	});
 	return assignment;
