@@ -16,42 +16,6 @@ export type ProfileInfo = {
 	school_group?: string;
 };
 
-export type StudentAssignment = {
-	id: string;
-	type: string;
-	name: string;
-	description: string;
-	grade: number;
-	start: string;
-	stop: string;
-	repo_created: boolean;
-	latest_update: string;
-	locked: boolean;
-	lock_reason: string;
-	subject: string;
-	grader: string;
-	integration: boolean;
-	repository_name: string;
-	repository_url: string;
-	factor_percentage: number;
-	grading_state: string;
-	current_run: string;
-	current_run_short_commit_id: string;
-	current_run_commit_url: string;
-	latest_run: string;
-	latest_run_short_commit_id: string;
-	latest_run_time: string;
-	latest_run_commit_url: string;
-	details: Details[];
-};
-
-export type Details = {
-	name: string;
-	grade: number;
-	max_grade?: number;
-	messages?: string[];
-};
-
 export type Table = {
 	name: string;
 	row_count: number;
@@ -83,17 +47,21 @@ export type TeacherModuleDesc = {
 export type TeacherModule = {
 	id?: string;
 	name?: string;
+	description?: string;
 	start?: Date;
 	stop?: Date;
 	unlock_key?: string;
+	source_url?: string;
 	assignments: TeacherAssignmentDesc[];
 };
 
 export type TeacherModuleForm = {
 	name?: string;
+	description?: string;
 	start?: Date;
 	stop?: Date;
 	unlock_key?: string;
+	source_url?: string;
 };
 
 export type TeacherAssignmentDesc = {
@@ -115,6 +83,7 @@ export type TeacherAssignment = {
 	subject_url?: string;
 	grader_url?: string;
 	repository_name?: string;
+	repository_url?: string;
 	factor_percentage?: number;
 	grader_run_url?: string;
 };
@@ -154,10 +123,8 @@ export type Module = {
 	description: string;
 	start: Date;
 	stop: Date;
-	linked_repo_count: number;
-	grade: number;
 	latest_update?: Date;
-	source: string;
+	source_url: string;
 	locked: boolean;
 	lock_reason?: string;
 	assignments: Array<AssignmentDesc>;
@@ -175,7 +142,44 @@ export type AssignmentDesc = {
 	grade: number;
 	repo_linked: boolean;
 	repository_name: string;
+};
+
+export type Assignment = {
+	id: string;
+	type: string;
+	name: string;
+	description: string;
+	grade: number;
+	start: Date;
+	stop: Date;
+	repo_linked: boolean;
+	repository_name: string;
 	subject_url: string;
+	grader_url: string;
+	repository_url: string;
+	factor_percentage: number;
+	locked: boolean;
+	lock_reason?: string;
+	latest_run?: CompleteRunInfo;
+	ongoing_run?: RunInfo;
+};
+
+export type RunInfo = {
+	short_commit_id: string;
+	commit_url: string;
+	grading_log_url: string;
+};
+
+export type CompleteRunInfo = RunInfo & {
+	time: Date;
+	details: Details[];
+};
+
+export type Details = {
+	name: string;
+	grade: number;
+	max_grade?: number;
+	messages?: string[];
 };
 
 export type Page<T> = {

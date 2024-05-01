@@ -1,202 +1,166 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
-	import type { StudentAssignment } from '$lib/types';
+	import api from '$lib/api';
 
 	export let data;
-
-	// get assignment details using data.assignmentId, cf +page.ts
-	let assignment: StudentAssignment = {
-		id: '7857c411-c79c-44d8-98a0-693deba1d77d',
-		type: 'exercise',
-		name: 'Control flow',
-		description: 'Build a CLI program and practice the Open/Close principle',
-		grade: 0,
-		start: '2023-03-10T17:00:00Z',
-		stop: '2023-03-14T17:00:00Z',
-		repo_created: false,
-		latest_update: '2023-03-22T17:00:00Z',
-		locked: false,
-		lock_reason: 'whatever',
-		subject: 'https://github.com/lernejo/exercises/blob/master/java_fr/EXERCISE.adoc',
-		grader: 'https://github.com/lernejo/korekto-java-basics-grader',
-		integration: false,
-		repository_name: 'java_exercise_1',
-		repository_url: 'https://github.com/toto/java_exercise_1',
-		factor_percentage: 5,
-		grading_state: 'ONGOING',
-		current_run: 'https://github.com/toto/java_exercise_1',
-		current_run_short_commit_id: '8529f2a',
-		current_run_commit_url:
-			'https://github.com/toto/java_exercise_1/commit/8529f2aaa2d9f8f35a17ae0ac40b240ae6918ad0',
-		latest_run: 'https://github.com/toto/java_exercise_1',
-		latest_run_short_commit_id: '72858c3',
-		latest_run_time: '2023-03-22T17:00:00Z',
-		latest_run_commit_url:
-			'https://github.com/toto/java_exercise_1/commit/72858c3ea42f61aa6913b639f5f51f2dfb17eb89',
-		details: [
-			{
-				name: 'Part 1 - Compilation & Tests',
-				grade: 4,
-				max_grade: 4
-			},
-			{
-				name: 'Part 3 - Code Coverage',
-				grade: 2.43,
-				max_grade: 3,
-				messages: ['Code coverage: 60.38%, expected: > 80.0% with `mvn verify`']
-			},
-			{
-				name: 'Git (proper descriptive messages)',
-				grade: 0,
-				messages: ['OK']
-			}
-		]
-	};
 </script>
 
-<div class="text-column">
-	<div class="row">
-		<div class="info-panel-left">
-			<a href="/module/{data.moduleId}" class="link blue">
-				<Icon icon="ic:baseline-arrow-back" inline />
-				Back to Module
-			</a>
-			<h1 class="black">Assignment: {assignment.name}</h1>
+{#await api.getAssignment(data.moduleId, data.assignmentId)}
+	<p class="p-white">...loading</p>
+{:then assignment}
+	<div class="text-column">
+		<div class="row">
+			<div class="info-panel-left">
+				<a href="/module/{data.moduleId}" class="link blue">
+					<Icon icon="ic:baseline-arrow-back" inline />
+					Back to Module
+				</a>
+				<h1 class="black">Assignment: {assignment.name}</h1>
 
-			<h3>{assignment.description}</h3>
-			<div>
-				Subject: <a
-					href={assignment.subject}
-					class="link blue"
-					target="_blank"
-					rel="noopener noreferrer">{assignment.subject}</a
-				>
+				<h3>{assignment.description}</h3>
+				<div>
+					Subject: <a
+						href={assignment.subject_url}
+						class="link blue"
+						target="_blank"
+						rel="noopener noreferrer">{assignment.subject_url}</a
+					>
+				</div>
+				<div class="pt-1">
+					Grader: <a
+						href={assignment.grader_url}
+						class="link blue"
+						target="_blank"
+						rel="noopener noreferrer">{assignment.grader_url}</a
+					>
+				</div>
 			</div>
-			<div class="pt-1">
-				Grader: <a
-					href={assignment.grader}
-					class="link blue"
-					target="_blank"
-					rel="noopener noreferrer">{assignment.grader}</a
-				>
+			<div class="info-panel-right">
+				<div class="row blue center-v">
+					<div class="border mr-1 icon">
+						<Icon icon="clarity:clock-line" inline style="font-size: 24px;" />
+					</div>
+					<div class="column">
+						<div>From: {jsDateToHumanDate(assignment.start.toISOString())}</div>
+						<div>
+							To: <span class="bold"
+								>{jsDateToHumanTime(assignment.stop.toISOString())}</span
+							>
+						</div>
+					</div>
+				</div>
+				<div class="row black center-v">
+					<div class="mr-1 icon">
+						<Icon icon="ph:medal-duotone" inline style="font-size: 24px;" />
+					</div>
+					<div>Grade: {assignment.grade} / 20</div>
+				</div>
+				<div class="row disabled center-v">
+					<div class="mr-1 icon">
+						<Icon icon="icon-park-twotone:big-x" inline style="font-size: 24px;" />
+					</div>
+					<div>Coefficient: {assignment.factor_percentage} %</div>
+				</div>
+				{#if assignment.locked}
+					<div class="row red center-v">
+						<div class="mr-1 icon">
+							<Icon icon="mingcute:lock-line" inline style="font-size: 24px;" />
+						</div>
+						<div>{assignment.lock_reason}</div>
+					</div>
+				{/if}
 			</div>
 		</div>
-		<div class="info-panel-right">
-			<div class="row blue center-v">
-				<div class="border mr-1 icon">
-					<Icon icon="clarity:clock-line" inline style="font-size: 24px;" />
-				</div>
-				<div class="column">
-					<div>From: {jsDateToHumanDate(assignment.start)}</div>
-					<div>To: <span class="bold">{jsDateToHumanTime(assignment.stop)}</span></div>
-				</div>
-			</div>
-			<div class="row black center-v">
-				<div class="mr-1 icon">
-					<Icon icon="ph:medal-duotone" inline style="font-size: 24px;" />
-				</div>
-				<div>Grade: {assignment.grade} / 20</div>
-			</div>
-			<div class="row disabled center-v">
-				<div class="mr-1 icon">
-					<Icon icon="icon-park-twotone:big-x" inline style="font-size: 24px;" />
-				</div>
-				<div>Coefficient: {assignment.factor_percentage} %</div>
-			</div>
-			{#if assignment.locked}
-				<div class="row red center-v">
-					<div class="mr-1 icon">
-						<Icon icon="mingcute:lock-line" inline style="font-size: 24px;" />
+		<div class="column p1 pt-1">
+			<div class="row">
+				<div class="row center-v content-line">
+					<div class="fushia">
+						<Icon icon="mdi:git" inline style="font-size: 40px;" />
 					</div>
-					<div>{assignment.lock_reason}</div>
+					<div class="column ml-1">
+						<div>Repository</div>
+						<a
+							href={assignment.repository_url}
+							class="link blue"
+							target="_blank"
+							rel="noopener noreferrer">{assignment.repository_name}</a
+						>
+						{#if !assignment.repo_linked}
+							<div class="red bold">(missing)</div>
+						{/if}
+					</div>
+				</div>
+				<div class="row center-v content-line">
+					<Icon icon="bi:gear-wide-connected" inline style="font-size: 40px;" />
+					<div class="column ml-1">
+						<div>Grading state:</div>
+						{#if assignment.ongoing_run !== undefined}
+							<a href={assignment.ongoing_run.grading_log_url}>
+								<div class="row green text-left">
+									<div class="bold">Ongoing</div>
+									<div class="rotating">
+										<Icon icon="zondicons:refresh" inline />
+									</div>
+								</div>
+							</a>
+						{/if}
+						{#if assignment.latest_run !== undefined}
+							<div>
+								Latest run: <a
+									class="link blue"
+									href={assignment.latest_run.grading_log_url}
+									>{assignment.latest_run.grading_log_url}</a
+								>
+							</div>
+						{/if}
+					</div>
+				</div>
+			</div>
+			{#if assignment.latest_run !== undefined}
+				<h3 class="black bold mb-0">Details of latest run:</h3>
+				<ul class="details">
+					{#each assignment.latest_run.details as detail}
+						<li>
+							{#if detail.max_grade === undefined}
+								{#if detail.grade === 0}
+									{detail.name}: OK
+								{:else}
+									{detail.name}: {detail.grade}
+								{/if}
+							{:else}
+								{detail.name}: {detail.grade} / {detail.max_grade}
+							{/if}
+							{#if detail.messages !== undefined && detail.grade !== 0}
+								<ul>
+									{#each detail.messages as message}
+										<li>{message}</li>
+									{/each}
+								</ul>
+							{/if}
+						</li>
+					{/each}
+				</ul>
+				<div>
+					Run at <span class="black bold"
+						>{jsDateToHumanTime(assignment.latest_run.time.toISOString())}</span
+					>
+					for commit
+					<a class="link blue" href={assignment.latest_run.commit_url}
+						>{assignment.latest_run.short_commit_id}</a
+					>
+				</div>
+				<div class="disabled mt-1">
+					<Icon icon="eva:menu-arrow-outline" inline style="transform: rotate(180deg);" />
+					Full log
+					<a class="link blue" href={assignment.latest_run.grading_log_url}>here</a>
 				</div>
 			{/if}
 		</div>
 	</div>
-	<div class="column p1 pt-1">
-		<div class="row">
-			<div class="row center-v content-line">
-				<div class="fushia">
-					<Icon icon="mdi:git" inline style="font-size: 40px;" />
-				</div>
-				<div class="column ml-1">
-					<div>Repository</div>
-					<a
-						href={assignment.repository_url}
-						class="link blue"
-						target="_blank"
-						rel="noopener noreferrer">{assignment.repository_url}</a
-					>
-					{#if !assignment.repo_created}
-						<div class="red bold">(missing)</div>
-					{/if}
-				</div>
-			</div>
-			<div class="row center-v content-line">
-				<Icon icon="bi:gear-wide-connected" inline style="font-size: 40px;" />
-				<div class="column ml-1">
-					<div>Grading state:</div>
-					{#if assignment.grading_state === 'ONGOING'}
-						<a href={assignment.current_run}>
-							<div class="row green text-left">
-								<div class="bold">Ongoing</div>
-								<div class="rotating">
-									<Icon icon="zondicons:refresh" inline />
-								</div>
-							</div>
-						</a>
-					{/if}
-					{#if assignment.latest_run != undefined}
-						<div>
-							Latest run: <a class="link blue" href={assignment.latest_run}
-								>{assignment.latest_run}</a
-							>
-						</div>
-					{/if}
-				</div>
-			</div>
-		</div>
-		{#if assignment.latest_run != undefined}
-			<h3 class="black bold mb-0">Details of latest run:</h3>
-			<ul class="details">
-				{#each assignment.details as detail}
-					<li>
-						{#if detail.max_grade === undefined}
-							{#if detail.grade === 0}
-								{detail.name}: OK
-							{:else}
-								{detail.name}: {detail.grade}
-							{/if}
-						{:else}
-							{detail.name}: {detail.grade} / {detail.max_grade}
-						{/if}
-						{#if detail.messages != undefined && detail.grade != 0}
-							<ul>
-								{#each detail.messages as message}
-									<li>{message}</li>
-								{/each}
-							</ul>
-						{/if}
-					</li>
-				{/each}
-			</ul>
-			<div>
-				Run at <span class="black bold"
-					>{jsDateToHumanTime(assignment.latest_run_time)}</span
-				>
-				for commit
-				<a class="link blue" href={assignment.latest_run_commit_url}
-					>{assignment.latest_run_short_commit_id}</a
-				>
-			</div>
-			<div class="disabled mt-1">
-				<Icon icon="eva:menu-arrow-outline" inline style="transform: rotate(180deg);" />
-				Full log <a class="link blue" href={assignment.latest_run}>here</a>
-			</div>
-		{/if}
-	</div>
-</div>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
 
 <style>
 	h1 {

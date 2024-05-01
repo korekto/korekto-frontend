@@ -1,4 +1,4 @@
-import type { Module, ModuleDesc, ModuleRedeemResponse } from '$lib/types';
+import type { Assignment, Module, ModuleDesc, ModuleRedeemResponse } from '$lib/types';
 import { axiosAPI } from '$lib/axios';
 
 export const redeemModule = async (key: string): Promise<ModuleRedeemResponse> => {
@@ -23,4 +23,13 @@ export const getModules = async (): Promise<ModuleDesc[]> => {
 
 export const getModule = async (module_id: string): Promise<Module> => {
 	return await axiosAPI.get<Module>(`/fapi/module/${module_id}`).then((res) => res.data);
+};
+
+export const getAssignment = async (
+	module_id: string,
+	assignment_id: string
+): Promise<Assignment> => {
+	return await axiosAPI
+		.get<Assignment>(`/fapi/module/${module_id}/assignment/${assignment_id}`)
+		.then((res) => res.data);
 };

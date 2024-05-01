@@ -13,7 +13,6 @@ export const createTeacherAssignment = async (
 	const module = mock.modules.filter((m) => m.id === module_id)[0];
 	module.assignments.push({
 		linked: false,
-		grade: 0,
 		locked: true,
 		...assignment
 	});

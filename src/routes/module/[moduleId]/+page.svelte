@@ -1,15 +1,23 @@
-<script>
+<script lang="ts">
 	import Icon from '@iconify/svelte';
-	import Assignment from './Assignment.svelte';
+	import AssignmentRow from './AssignmentRow.svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
 	import api from '$lib/api';
+	import type { Module } from '$lib/types';
 
 	export let data;
 
-	let modulePromise = api.getModule(data.moduleId);
+	const computeGrade = (m: Module): number => {
+		return Number(
+			m.assignments
+				.map((a) => (a.grade * a.factor_percentage) / 100)
+				.reduce((acc, grade) => acc + grade, 0)
+				.toFixed(2)
+		);
+	};
 </script>
 
-{#await modulePromise}
+{#await api.getModule(data.moduleId)}
 	<p class="p-white">...loading</p>
 {:then module}
 	<div class="text-column">
@@ -19,10 +27,10 @@
 				<h3>{module.description}</h3>
 				<div>
 					Course: <a
-						href={module.source}
+						href={module.source_url}
 						class="link blue"
 						target="_blank"
-						rel="noopener noreferrer">{module.source}</a
+						rel="noopener noreferrer">{module.source_url}</a
 					>
 				</div>
 				<h3 class="black bold">Assignments:</h3>
@@ -51,7 +59,7 @@
 					<div class="mr-1 icon">
 						<Icon icon="ph:medal-duotone" inline style="font-size: 24px;" />
 					</div>
-					<div>Grade: {module.grade} / 20</div>
+					<div>Grade: {computeGrade(module)} / 20</div>
 				</div>
 				{#if module.locked}
 					<div class="row red center-v">
@@ -65,7 +73,7 @@
 		</div>
 		<div class="column p1">
 			{#each module.assignments as assignment (assignment.id)}
-				<Assignment {assignment} moduleId={module.id} />
+				<AssignmentRow {assignment} moduleId={module.id} />
 			{/each}
 		</div>
 	</div>
