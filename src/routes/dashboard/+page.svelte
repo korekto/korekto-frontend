@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Module from './Module.svelte';
+	import ModuleRow from './ModuleRow.svelte';
 	import Modal from '$lib/component/Modal.svelte';
 	import '$css/form.css';
 	import '$css/grid.css';
@@ -32,7 +32,7 @@
 			<p class="p-white">...loading</p>
 		{:then modules}
 			{#each modules as module (module.id)}
-				<Module {module} />
+				<ModuleRow {module} />
 			{/each}
 		{:catch error}
 			<p style="color: red">{error.message}</p>
