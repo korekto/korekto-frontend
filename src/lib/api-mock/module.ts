@@ -82,7 +82,6 @@ export const getAssignment = async (
 		type: a.type ?? 'should be defined',
 		name: a.name ?? 'should be defined',
 		description: a.description ?? 'should be defined',
-		grade: mock.gradeAssignment(a).normalized_grade,
 		start: a.start ?? new Date(0),
 		stop: a.stop ?? new Date(0),
 		repo_linked: a.linked,

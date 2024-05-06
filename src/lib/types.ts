@@ -149,7 +149,6 @@ export type Assignment = {
 	type: string;
 	name: string;
 	description: string;
-	grade: number;
 	start: Date;
 	stop: Date;
 	repo_linked: boolean;

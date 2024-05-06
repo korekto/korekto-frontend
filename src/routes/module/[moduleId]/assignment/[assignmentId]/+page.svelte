@@ -2,8 +2,25 @@
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
 	import api from '$lib/api';
+	import type { Assignment } from '$lib/types';
 
 	export let data;
+
+	const computeGrade = (a: Assignment): number => {
+		if (a.latest_run !== undefined) {
+			let grade = 0;
+			let max_grade = 0;
+			for (const detail of a.latest_run.details) {
+				grade += detail.grade;
+				if (detail.max_grade !== undefined) {
+					max_grade += detail.max_grade;
+				}
+			}
+			return Number(((grade * 20) / max_grade).toFixed(2));
+		} else {
+			return 0;
+		}
+	};
 </script>
 
 {#await api.getAssignment(data.moduleId, data.assignmentId)}
@@ -54,7 +71,7 @@
 					<div class="mr-1 icon">
 						<Icon icon="ph:medal-duotone" inline style="font-size: 24px;" />
 					</div>
-					<div>Grade: {assignment.grade} / 20</div>
+					<div>Grade: {computeGrade(assignment)} / 20</div>
 				</div>
 				<div class="row disabled center-v">
 					<div class="mr-1 icon">
