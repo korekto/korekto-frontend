@@ -27,6 +27,13 @@
 				href="/admin/unparseable_webhooks">Unparseable Webhooks</a
 			>
 		</li>
+		<li class="nav-item">
+			<a
+				class="nav-link active"
+				aria-current={$page.url.pathname === '/admin/grading_tasks' ? 'page' : undefined}
+				href="/admin/grading_tasks">Grading Tasks</a
+			>
+		</li>
 	</nav>
 
 	<slot class="content" />

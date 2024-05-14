@@ -1,5 +1,5 @@
 import { axiosAPI } from './../axios';
-import type { Page, Table, UnparseableWebhook, UserForAdmin } from './../types';
+import type { GradingTask, Page, Table, UnparseableWebhook, UserForAdmin } from './../types';
 import { loadUser } from './../stores';
 
 export const getTables = async (): Promise<Table[]> => {
@@ -49,4 +49,13 @@ export const deleteUnparseableWebhooks = async () => {
 		method: 'delete',
 		url: '/fapi/admin/unparseable_webhooks'
 	});
+};
+
+export const getGradingTasks = async (
+	page: number,
+	per_page: number
+): Promise<Page<GradingTask>> => {
+	return await axiosAPI
+		.get<Page<GradingTask>>(`/fapi/admin/grading_tasks?page=${page}&per_page=${per_page}`)
+		.then((res) => res.data);
 };

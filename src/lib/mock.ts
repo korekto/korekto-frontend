@@ -4,7 +4,8 @@ import type {
 	UnparseableWebhook,
 	RunInfo,
 	Details,
-	CompleteRunInfo
+	CompleteRunInfo,
+	GradingTask
 } from './types';
 
 export const uuidv4 = () => {
@@ -175,6 +176,8 @@ for (let index = 0; index < unparseable_webhooks.length; index++) {
 		error: 'some error'
 	};
 }
+
+export const grading_tasks: GradingTask[] = [];
 
 export const deleteUsers = (ids: string[]): void => {
 	users = users.filter((u) => !ids.includes(u.id));

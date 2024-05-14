@@ -1,4 +1,4 @@
-import type { Page, Table, UnparseableWebhook, UserForAdmin } from './../types';
+import type { GradingTask, Page, Table, UnparseableWebhook, UserForAdmin } from './../types';
 import * as mock from './../mock';
 import { loadUser } from './../stores';
 
@@ -46,4 +46,20 @@ export const getUnparseableWebhooks = async (
 
 export const deleteUnparseableWebhooks = async () => {
 	mock.unparseable_webhooks.splice(0);
+};
+
+export const getGradingTasks = async (
+	page: number,
+	per_page: number
+): Promise<Page<GradingTask>> => {
+	const start = page == 1 ? 0 : (page - 1) * per_page;
+	const end = start + per_page;
+	const items = mock.grading_tasks.slice(start, end);
+	return {
+		page: page,
+		per_page: per_page,
+		total_count: mock.grading_tasks.length,
+		total_page: Math.ceil(mock.grading_tasks.length / per_page),
+		data: items
+	};
 };

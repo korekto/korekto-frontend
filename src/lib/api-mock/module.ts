@@ -98,3 +98,27 @@ export const getAssignment = async (
 		ongoing_run: a.ongoing_run
 	};
 };
+
+export const triggerGrading = async (module_id: string, assignment_id: string): Promise<void> => {
+	const assignment = mock.modules
+		.find((m) => m.id === module_id)
+		?.assignments.find((a) => a.id === assignment_id);
+	mock.grading_tasks.push({
+		assignment_id: assignment_id,
+		created_at: new Date(),
+		module_id: module_id,
+		provider_login: mock.users[0].provider_login,
+		repository_name: assignment?.repository_name ?? 'no matching assignment',
+		status: 'queued',
+		updated_at: new Date()
+	});
+};
+
+export const syncRepo = async (module_id: string, assignment_id: string): Promise<void> => {
+	const assignment = mock.modules
+		.find((m) => m.id === module_id)
+		?.assignments.find((a) => a.id === assignment_id);
+	if (assignment) {
+		assignment.linked = true;
+	}
+};

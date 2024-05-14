@@ -197,3 +197,13 @@ export type UnparseableWebhook = {
 	payload: string;
 	error: string;
 };
+
+export type GradingTask = {
+	module_id: string;
+	assignment_id: string;
+	provider_login: string;
+	status: string;
+	created_at: Date;
+	updated_at: Date;
+	repository_name: string;
+};

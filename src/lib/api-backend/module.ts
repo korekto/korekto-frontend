@@ -33,3 +33,15 @@ export const getAssignment = async (
 		.get<Assignment>(`/fapi/module/${module_id}/assignment/${assignment_id}`)
 		.then((res) => res.data);
 };
+
+export const triggerGrading = async (module_id: string, assignment_id: string): Promise<void> => {
+	return await axiosAPI
+		.post(`/fapi/module/${module_id}/assignment/${assignment_id}/trigger-grading`)
+		.then((res) => res.data);
+};
+
+export const syncRepo = async (module_id: string, assignment_id: string): Promise<void> => {
+	return await axiosAPI
+		.post(`/fapi/module/${module_id}/assignment/${assignment_id}/sync-repo`)
+		.then((res) => res.data);
+};
