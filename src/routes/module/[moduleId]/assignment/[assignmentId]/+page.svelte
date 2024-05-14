@@ -7,7 +7,7 @@
 	export let data;
 
 	const computeGrade = (a: Assignment): number => {
-		if (a.latest_run !== undefined) {
+		if (a.latest_run) {
 			let grade = 0;
 			let max_grade = 0;
 			for (const detail of a.latest_run.details) {
@@ -79,6 +79,19 @@
 					</div>
 					<div>Coefficient: {assignment.factor_percentage} %</div>
 				</div>
+				{#if assignment.repo_linked}
+					<div class="row disabled center-v">
+						<div class="mr-1 icon">
+							<Icon icon="emojione:rocket" inline style="font-size: 24px;" />
+						</div>
+						<button
+							type="button"
+							on:click={() => api.triggerGrading(data.moduleId, data.assignmentId)}
+							class="col-sm-1 btn btn-success"
+							>Trigger grading
+						</button>
+					</div>
+				{/if}
 				{#if assignment.locked}
 					<div class="row red center-v">
 						<div class="mr-1 icon">
@@ -105,6 +118,12 @@
 						>
 						{#if !assignment.repo_linked}
 							<div class="red bold">(missing)</div>
+							<button
+								type="button"
+								on:click={() => api.syncRepo(data.moduleId, data.assignmentId)}
+								class="col-sm-1 btn-link"
+								><Icon icon="tabler:refresh" inline style="font-size: 24px;" /> Sync
+							</button>
 						{/if}
 					</div>
 				</div>
@@ -112,7 +131,7 @@
 					<Icon icon="bi:gear-wide-connected" inline style="font-size: 40px;" />
 					<div class="column ml-1">
 						<div>Grading state:</div>
-						{#if assignment.ongoing_run !== undefined}
+						{#if assignment.ongoing_run}
 							<a href={assignment.ongoing_run.grading_log_url}>
 								<div class="row green text-left">
 									<div class="bold">Ongoing</div>
@@ -122,7 +141,7 @@
 								</div>
 							</a>
 						{/if}
-						{#if assignment.latest_run !== undefined}
+						{#if assignment.latest_run}
 							<div>
 								Latest run: <a
 									class="link blue"
@@ -134,7 +153,7 @@
 					</div>
 				</div>
 			</div>
-			{#if assignment.latest_run !== undefined}
+			{#if assignment.latest_run}
 				<h3 class="black bold mb-0">Details of latest run:</h3>
 				<ul class="details">
 					{#each assignment.latest_run.details as detail}
@@ -281,5 +300,24 @@
 		100% {
 			transform: rotate(360deg);
 		}
+	}
+
+	.btn {
+		/*border: var(--bs-btn-border-width) solid var(--bs-btn-border-color); */
+		border-radius: 0.375rem;
+	}
+
+	.btn-success {
+		background-color: #198754;
+	}
+
+	.btn-link {
+		background: none !important;
+		border: none;
+		padding: 0 !important;
+		font-family: arial, sans-serif;
+		color: #069;
+		text-decoration: underline;
+		cursor: pointer;
 	}
 </style>
