@@ -7,6 +7,7 @@ export type User = {
 	avatar_url: string;
 	admin: boolean;
 	teacher: boolean;
+	installation_id?: string;
 };
 
 export type ProfileInfo = {
