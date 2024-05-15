@@ -6,6 +6,18 @@
 
 	export let data;
 
+	let assignmentPromise = api.getAssignment(data.moduleId, data.assignmentId);
+
+	const syncRepo = async () => {
+		await api.syncRepo(data.moduleId, data.assignmentId);
+		assignmentPromise = api.getAssignment(data.moduleId, data.assignmentId);
+	};
+
+	const triggerGrading = async () => {
+		await api.triggerGrading(data.moduleId, data.assignmentId);
+		assignmentPromise = api.getAssignment(data.moduleId, data.assignmentId);
+	};
+
 	const computeGrade = (a: Assignment): number => {
 		if (a.latest_run) {
 			let grade = 0;
@@ -23,7 +35,7 @@
 	};
 </script>
 
-{#await api.getAssignment(data.moduleId, data.assignmentId)}
+{#await assignmentPromise}
 	<p class="p-white">...loading</p>
 {:then assignment}
 	<div class="text-column">
@@ -86,7 +98,7 @@
 						</div>
 						<button
 							type="button"
-							on:click={() => api.triggerGrading(data.moduleId, data.assignmentId)}
+							on:click={triggerGrading}
 							class="col-sm-1 btn btn-success"
 							>Trigger grading
 						</button>
@@ -118,10 +130,7 @@
 						>
 						{#if !assignment.repo_linked}
 							<div class="red bold">(missing)</div>
-							<button
-								type="button"
-								on:click={() => api.syncRepo(data.moduleId, data.assignmentId)}
-								class="col-sm-1 btn-link"
+							<button type="button" on:click={syncRepo} class="col-sm-1 btn-link"
 								><Icon icon="tabler:refresh" inline style="font-size: 24px;" /> Sync
 							</button>
 						{/if}
