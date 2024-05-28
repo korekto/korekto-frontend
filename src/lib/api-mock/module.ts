@@ -1,9 +1,10 @@
-import type {
-	Assignment,
-	AssignmentDesc,
-	Module,
-	ModuleDesc,
-	ModuleRedeemResponse
+import {
+	type Assignment,
+	type AssignmentDesc,
+	GradingStatus,
+	type Module,
+	type ModuleDesc,
+	type ModuleRedeemResponse
 } from '$lib/types';
 import * as mock from '$lib/mock';
 
@@ -95,7 +96,9 @@ export const getAssignment = async (
 		locked: a.locked,
 		lock_reason: a.locked_reason,
 		latest_run: a.latest_run,
-		ongoing_run: a.ongoing_run
+		ongoing_run: a.ongoing_run,
+		status: a.status,
+		queue_due_to: 192
 	};
 };
 
@@ -103,6 +106,9 @@ export const triggerGrading = async (module_id: string, assignment_id: string): 
 	const assignment = mock.modules
 		.find((m) => m.id === module_id)
 		?.assignments.find((a) => a.id === assignment_id);
+	if (assignment) {
+		assignment.status = GradingStatus.QUEUED;
+	}
 	mock.grading_tasks.push({
 		assignment_id: assignment_id,
 		created_at: new Date(),

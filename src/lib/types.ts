@@ -162,7 +162,19 @@ export type Assignment = {
 	lock_reason?: string;
 	latest_run?: CompleteRunInfo;
 	ongoing_run?: RunInfo;
+	status?: GradingStatus;
+	queue_due_to: number;
+	error?: string;
 };
+
+export enum GradingStatus {
+	QUEUED = 'QUEUED',
+	RESERVED = 'RESERVED',
+	ORDERED = 'ORDERED',
+	STARTED = 'STARTED',
+	ERROR = 'ERROR',
+	SUCCESSFUL = 'SUCCESSFUL'
+}
 
 export type RunInfo = {
 	short_commit_id: string;
@@ -203,6 +215,7 @@ export type GradingTask = {
 	module_id: string;
 	assignment_id: string;
 	provider_login: string;
+	// TODO get rid of this field ?
 	status: string;
 	created_at: Date;
 	updated_at: Date;
