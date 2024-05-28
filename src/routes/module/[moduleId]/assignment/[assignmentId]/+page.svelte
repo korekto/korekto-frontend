@@ -1,21 +1,46 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import { jsDateToHumanDate, jsDateToHumanTime } from '$lib/utils';
 	import api from '$lib/api';
 	import type { Assignment } from '$lib/types';
+	import { GradingStatus } from '$lib/types';
+	import { durationInSecsToHumanReadable } from '$lib/utils';
 
 	export let data;
 
-	let assignmentPromise = api.getAssignment(data.moduleId, data.assignmentId);
+	let assignment: Assignment | null = null;
+	const statusNeedingRefresh = [
+		GradingStatus.QUEUED,
+		GradingStatus.RESERVED,
+		GradingStatus.ORDERED,
+		GradingStatus.STARTED
+	];
+
+	const getAndStore = async () => {
+		assignment = await api.getAssignment(data.moduleId, data.assignmentId);
+	};
+
+	const reloadIfStatusNeedsIt = async () => {
+		if (assignment && statusNeedingRefresh.includes(assignment.status!)) {
+			await getAndStore();
+		}
+	};
+
+	onMount(() => {
+		const interval = setInterval(reloadIfStatusNeedsIt, 5000);
+
+		return () => clearInterval(interval);
+	});
 
 	const syncRepo = async () => {
 		await api.syncRepo(data.moduleId, data.assignmentId);
-		assignmentPromise = api.getAssignment(data.moduleId, data.assignmentId);
+		await getAndStore();
 	};
 
 	const triggerGrading = async () => {
 		await api.triggerGrading(data.moduleId, data.assignmentId);
-		assignmentPromise = api.getAssignment(data.moduleId, data.assignmentId);
+		await getAndStore();
 	};
 
 	const computeGrade = (a: Assignment): number => {
@@ -33,11 +58,13 @@
 			return 0;
 		}
 	};
+
+	getAndStore();
 </script>
 
-{#await assignmentPromise}
+{#if !assignment}
 	<p class="p-white">...loading</p>
-{:then assignment}
+{:else}
 	<div class="text-column">
 		<div class="row">
 			<div class="info-panel-left">
@@ -137,29 +164,63 @@
 					</div>
 				</div>
 				<div class="row center-v content-line">
-					<Icon icon="bi:gear-wide-connected" inline style="font-size: 40px;" />
-					<div class="column ml-1">
-						<div>Grading state:</div>
-						{#if assignment.ongoing_run}
-							<a href={assignment.ongoing_run.grading_log_url}>
-								<div class="row green text-left">
-									<div class="bold">Ongoing</div>
-									<div class="rotating">
-										<Icon icon="zondicons:refresh" inline />
-									</div>
+					{#if assignment.status}
+						<Icon icon="bi:gear-wide-connected" inline style="font-size: 40px;" />
+						<div class="column ml-1">
+							<div>Grading state:</div>
+							<div class="row">
+								<div>
+									{#if assignment.status === GradingStatus.QUEUED}
+										<div class="row light-blue text-left">
+											<Icon icon="ion:timer-outline" inline />&nbsp;
+											<div class="bold status">{assignment.status}</div>
+											{#if assignment.queue_due_to}
+												&nbsp;
+												<div>
+													(due in {durationInSecsToHumanReadable(
+														assignment.queue_due_to
+													)})
+												</div>
+											{/if}
+										</div>
+									{:else if assignment.status !== GradingStatus.ERROR}
+										<div class="row green text-left">
+											<div class="rotating">
+												<Icon icon="zondicons:refresh" inline />
+											</div>
+											&nbsp;
+											<div class="bold status">{assignment.status}</div>
+										</div>
+									{:else}
+										<div class="row red text-left">
+											<Icon icon="openmoji:cross-mark" inline />
+											&nbsp;
+											<div class="bold status">{assignment.status}</div>
+											&nbsp;
+											<div>{assignment.error}</div>
+										</div>
+									{/if}
 								</div>
-							</a>
-						{/if}
-						{#if assignment.latest_run}
-							<div>
-								Latest run: <a
-									class="link blue"
-									href={assignment.latest_run.grading_log_url}
-									>{assignment.latest_run.grading_log_url}</a
-								>
+								{#if assignment.ongoing_run}
+									<div>
+										<div>
+											Grading <a
+												class="link blue"
+												href={assignment.ongoing_run.commit_url}
+												>{assignment.ongoing_run.short_commit_id}</a
+											>
+											(see
+											<a
+												class="link blue"
+												href={assignment.ongoing_run.grading_log_url}
+												>logs</a
+											>)
+										</div>
+									</div>
+								{/if}
 							</div>
-						{/if}
-					</div>
+						</div>
+					{/if}
 				</div>
 			</div>
 			{#if assignment.latest_run}
@@ -203,9 +264,7 @@
 			{/if}
 		</div>
 	</div>
-{:catch error}
-	<p style="color: red">{error.message}</p>
-{/await}
+{/if}
 
 <style>
 	h1 {
@@ -237,6 +296,9 @@
 	}
 	.blue {
 		color: blue;
+	}
+	.light-blue {
+		color: CornflowerBlue;
 	}
 	.black {
 		color: black;
@@ -328,5 +390,13 @@
 		color: #069;
 		text-decoration: underline;
 		cursor: pointer;
+	}
+
+	.status {
+		text-transform: lowercase;
+	}
+
+	.status::first-letter {
+		text-transform: uppercase;
 	}
 </style>

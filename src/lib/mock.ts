@@ -1,11 +1,12 @@
-import type {
-	UserForAdmin,
-	TeacherAssignment,
-	UnparseableWebhook,
-	RunInfo,
-	Details,
-	CompleteRunInfo,
-	GradingTask
+import {
+	type UserForAdmin,
+	type TeacherAssignment,
+	type UnparseableWebhook,
+	type RunInfo,
+	type Details,
+	type CompleteRunInfo,
+	type GradingTask,
+	GradingStatus
 } from './types';
 
 export const uuidv4 = () => {
@@ -217,6 +218,7 @@ export type AssignmentState = {
 	latest_run?: CompleteRunInfo;
 	ongoing_run?: RunInfo;
 	latest_details?: Details[];
+	status?: GradingStatus;
 };
 
 export type AssignmentBacked = TeacherAssignment & AssignmentState;
