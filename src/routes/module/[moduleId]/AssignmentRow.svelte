@@ -86,10 +86,10 @@
 		margin-left: 15px;
 	}
 	.cell-sm {
-		flex: 0 0 17%;
+		flex: 0 0 19%;
 	}
 	.cell-big {
-		flex: 1 0 26%;
+		flex: 1 0 25%;
 	}
 	.title {
 		font-size: 20px;
