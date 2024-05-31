@@ -3,9 +3,13 @@ import type {
 	TeacherModule,
 	TeacherModuleForm,
 	TeacherAssignment,
-	TeacherAssignmentDesc
+	TeacherAssignmentDesc,
+	ModuleGradesSummary,
+	GradeAssignmentDesc,
+	StudentGrades
 } from './../types';
 import * as mock from './../mock';
+import { gradeAssignment, gradeModule } from './../mock';
 
 export const getTeacherModules = async (): Promise<TeacherModuleDesc[]> => {
 	return mock.modules.map((m: mock.ModuleBacked) => ({
@@ -68,4 +72,28 @@ export const updateTeacherModule = async (
 
 export const deleteTeacherModules = async (ids: string[]) => {
 	mock.deleteTeacherModules(ids);
+};
+
+export const getGrades = async (module_id: string): Promise<ModuleGradesSummary> => {
+	const module = mock.modules.find(({ id }) => id === module_id)!;
+	const assignments: GradeAssignmentDesc[] = module.assignments.map((a, index) => ({
+		short_name: a.type == 'EXERCISE' ? 'EX' + (index + 1) : 'Project',
+		name: a.name!,
+		description: a.description!,
+		type: a.type!,
+		factor_percentage: a.factor_percentage!
+	}));
+	const user0_grades = module.assignments.map(gradeAssignment).map((g) => g.normalized_grade);
+	const other_user_grades = Array<number>(module.assignments.length).fill(0);
+	const grades: StudentGrades[] = mock.users.map((u, index) => ({
+		first_name: u.firstname,
+		last_name: u.lastname,
+		school_email: u.school_email,
+		grades: index === 0 ? user0_grades : other_user_grades,
+		total: index === 0 ? gradeModule(module) : 0
+	}));
+	return {
+		assignments,
+		students: grades
+	};
 };

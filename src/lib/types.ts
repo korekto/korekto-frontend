@@ -221,3 +221,24 @@ export type GradingTask = {
 	updated_at: Date;
 	repository_name: string;
 };
+
+export type ModuleGradesSummary = {
+	assignments: GradeAssignmentDesc[];
+	students: StudentGrades[];
+};
+
+export type GradeAssignmentDesc = {
+	short_name: string;
+	name: string;
+	description: string;
+	type: string;
+	factor_percentage: number;
+};
+
+export type StudentGrades = {
+	first_name: string;
+	last_name: string;
+	school_email: string;
+	grades: number[];
+	total: number;
+};

@@ -11,11 +11,11 @@ describe('updateProfile mock api', () => {
 		});
 
 		expect(await getSelf()).toEqual({
-			admin: false,
+			admin: true,
 			avatar_url: expect.any(String),
 			firstname: 'test 1234',
 			lastname: 'something',
-			role: 'Student',
+			role: 'Admin',
 			school_email: 'toto@test.org',
 			school_group: '43B',
 			teacher: false

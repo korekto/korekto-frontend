@@ -24,7 +24,7 @@ export let users: UserForAdmin[] = [
 		school_email: 'toto@myschool.com',
 		provider_email: 'toto@titi.com',
 		teacher: false,
-		admin: false,
+		admin: true,
 		modules: []
 	},
 	{
@@ -81,7 +81,7 @@ export let modules: ModuleBacked[] = [
 		assignments: [
 			{
 				id: '1234',
-				type: 'exercise',
+				type: 'EXERCISE',
 				name: 'Java basics',
 				start: new Date('2023-09-14T14:05:44Z'),
 				stop: new Date('2023-09-28T20:00:44Z'),
@@ -127,7 +127,7 @@ export let modules: ModuleBacked[] = [
 			},
 			{
 				id: '4567',
-				type: 'exercise',
+				type: 'EXERCISE',
 				name: 'Maven training',
 				start: new Date('2023-09-14T14:05:44Z'),
 				stop: new Date('2023-09-28T20:00:44Z'),
@@ -139,6 +139,40 @@ export let modules: ModuleBacked[] = [
 				grader_run_url: 'toto',
 				linked: false,
 				locked: true
+			},
+			{
+				id: '89',
+				type: 'PROJECT',
+				name: 'Send a marmot to space',
+				start: new Date('2023-09-14T14:05:44Z'),
+				stop: new Date('2023-09-28T20:00:44Z'),
+				description: 'A very difficult subject',
+				subject_url: 'toto',
+				grader_url: 'toto',
+				repository_name: 'space_marmot',
+				factor_percentage: 75,
+				grader_run_url: 'toto',
+				linked: true,
+				locked: false,
+				latest_run: {
+					short_commit_id: '72858c3',
+					commit_url:
+						'https://github.com/toto/java_exercise_1/commit/72858c3ea42f61aa6913b639f5f51f2dfb17eb89',
+					grading_log_url: 'https://github.com/some-runner-runner/job/machin/bidule',
+					time: new Date('2023-03-22T17:00:00Z'),
+					details: [
+						{
+							name: 'Part 1 - Put an helmet on the marmot',
+							grade: 2,
+							max_grade: 3
+						},
+						{
+							name: 'Part 2 - Send said marmot to space',
+							grade: 16.83,
+							max_grade: 17
+						}
+					]
+				}
 			}
 		]
 	},

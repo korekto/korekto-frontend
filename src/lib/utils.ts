@@ -23,3 +23,15 @@ export const durationInSecsToHumanReadable = (secs: number) => {
 		.join(', ')
 		.replace(/,([^,]*)$/, ' and$1');
 };
+
+export const download = (path: string, filename: string) => {
+	const anchor = document.createElement('a');
+	anchor.href = path;
+	anchor.download = filename;
+
+	document.body.appendChild(anchor);
+
+	anchor.click();
+
+	document.body.removeChild(anchor);
+};

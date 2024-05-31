@@ -3,7 +3,7 @@
 	import type { TeacherModuleForm } from '$lib/types';
 	import api from '$lib/api';
 	import { jsDateToHumanDate } from '$lib/utils';
-	import Module from './../Module.svelte';
+	import Module from './../../Module.svelte';
 	import '$css/table.css';
 
 	export let data;
@@ -25,11 +25,6 @@
 
 <div class="text-column">
 	<h3>Edit module</h3>
-
-	<a href="/teacher" class="link blue">
-		<Icon icon="ic:baseline-arrow-back" inline />
-		Back to Module list
-	</a>
 
 	{#await teacherModulePromise}
 		<p class="p-white">...loading</p>

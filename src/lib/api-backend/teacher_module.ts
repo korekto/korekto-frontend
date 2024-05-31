@@ -1,5 +1,10 @@
 import { axiosAPI } from './../axios';
-import type { TeacherModuleDesc, TeacherModule, TeacherModuleForm } from './../types';
+import type {
+	TeacherModuleDesc,
+	TeacherModule,
+	TeacherModuleForm,
+	ModuleGradesSummary
+} from './../types';
 
 export const getTeacherModules = async (): Promise<TeacherModuleDesc[]> => {
 	return await axiosAPI.get<TeacherModuleDesc[]>('/fapi/teacher/module').then((res) => res.data);
@@ -33,4 +38,10 @@ export const deleteTeacherModules = async (ids: string[]) => {
 			'Content-Type': 'application/json'
 		}
 	});
+};
+
+export const getGrades = async (module_id: string): Promise<ModuleGradesSummary> => {
+	return await axiosAPI
+		.get<ModuleGradesSummary>(`/fapi/teacher/module/${module_id}/grade`)
+		.then((res) => res.data);
 };
