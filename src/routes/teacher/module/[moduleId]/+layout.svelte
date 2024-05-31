@@ -1,5 +1,8 @@
 <script>
 	import { page } from '$app/stores';
+	import Icon from '@iconify/svelte';
+
+	export let data;
 </script>
 
 <div>
@@ -7,34 +10,27 @@
 		<li class="nav-item">
 			<a
 				class="nav-link active"
-				aria-current={$page.url.pathname === '/admin/users' ? 'page' : undefined}
-				href="/admin/users">Users</a
-			>
-		</li>
-		<li class="nav-item">
-			<a
-				class="nav-link active"
-				aria-current={$page.url.pathname === '/admin/database' ? 'page' : undefined}
-				href="/admin/database">Database</a
-			>
-		</li>
-		<li class="nav-item">
-			<a
-				class="nav-link active"
-				aria-current={$page.url.pathname === '/admin/unparseable_webhooks'
+				aria-current={$page.url.pathname === '/teacher/module/{{data.moduleId}}/details'
 					? 'page'
 					: undefined}
-				href="/admin/unparseable_webhooks">Unparseable Webhooks</a
+				href="/teacher/module/{data.moduleId}/details">Details</a
 			>
 		</li>
 		<li class="nav-item">
 			<a
 				class="nav-link active"
-				aria-current={$page.url.pathname === '/admin/grading_tasks' ? 'page' : undefined}
-				href="/admin/grading_tasks">Grading Tasks</a
+				aria-current={$page.url.pathname === '/teacher/module/{{data.moduleId}}/grades'
+					? 'page'
+					: undefined}
+				href="/teacher/module/{data.moduleId}/grades">Grades</a
 			>
 		</li>
 	</nav>
+
+	<a href="/teacher" class="link blue">
+		<Icon icon="ic:baseline-arrow-back" inline />
+		Back to Module list
+	</a>
 
 	<slot class="content" />
 </div>
@@ -44,7 +40,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		padding: 5px 10px;
-		margin-bottom: 0;
+		margin-bottom: 10px;
 		list-style: none;
 		box-sizing: border-box;
 		background-color: black;

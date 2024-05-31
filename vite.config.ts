@@ -6,5 +6,13 @@ export default defineConfig({
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
-	base: './'
+	base: './',
+	build: {
+		sourcemap: true,
+		minify: false
+	},
+	css: {
+		devSourcemap: true
+	},
+	mode: 'development'
 });

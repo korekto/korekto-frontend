@@ -1,12 +1,12 @@
 <script>
-	import { getTables } from '$lib/api';
+	import api from '$lib/api';
 	import '$css/table.css';
 </script>
 
 <div class="text-column">
 	<h3>Database</h3>
 
-	{#await getTables()}
+	{#await api.getTables()}
 		<p class="p-white">...loading tables</p>
 	{:then tables}
 		<table class="table">

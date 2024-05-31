@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { redeemCode } from '$lib/api';
+	import api from '$lib/api';
 	import '$css/form.css';
 	import '$css/grid.css';
 
@@ -9,7 +9,7 @@
 
 	const submitHandler = async () => {
 		if (code !== undefined) {
-			await redeemCode(code);
+			await api.redeemCode(code);
 			on_refresh_menu();
 		}
 	};

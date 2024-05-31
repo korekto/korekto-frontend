@@ -9,7 +9,7 @@ axiosAPI.interceptors.response.use(
 	},
 	function (error) {
 		if (401 === error.response.status) {
-			// Reload the page to give the server a chance to redirect to the login page
+			// Reload the page to give the api-backend a chance to redirect to the login page
 			location.reload();
 		} else {
 			return Promise.reject(error);

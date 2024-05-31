@@ -1,35 +1,30 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import type { TeacherModuleForm } from '$lib/types';
-	import { getTeacherModule, updateTeacherModule, deleteTeacherAssignments } from '$lib/api';
+	import api from '$lib/api';
 	import { jsDateToHumanDate } from '$lib/utils';
-	import Module from './../Module.svelte';
+	import Module from './../../Module.svelte';
 	import '$css/table.css';
 
 	export let data;
 
 	let selection: string[] = [];
 
-	let teacherModulePromise = getTeacherModule(data.moduleId);
+	let teacherModulePromise = api.getTeacherModule(data.moduleId);
 
 	const onSave = async (m: TeacherModuleForm) => {
-		await updateTeacherModule(data.moduleId, m);
-		teacherModulePromise = getTeacherModule(data.moduleId);
+		await api.updateTeacherModule(data.moduleId, m);
+		teacherModulePromise = api.getTeacherModule(data.moduleId);
 	};
 
 	async function bulkDelete() {
-		await deleteTeacherAssignments(data.moduleId, selection);
-		teacherModulePromise = getTeacherModule(data.moduleId);
+		await api.deleteTeacherAssignments(data.moduleId, selection);
+		teacherModulePromise = api.getTeacherModule(data.moduleId);
 	}
 </script>
 
 <div class="text-column">
 	<h3>Edit module</h3>
-
-	<a href="/teacher" class="link blue">
-		<Icon icon="ic:baseline-arrow-back" inline />
-		Back to Module list
-	</a>
 
 	{#await teacherModulePromise}
 		<p class="p-white">...loading</p>

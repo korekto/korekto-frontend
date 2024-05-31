@@ -1,23 +1,19 @@
-import type {
-	User,
-	Table,
-	UserForAdmin,
-	TeacherModuleDesc,
-	TeacherModule,
-	TeacherModuleForm,
-	TeacherAssignment,
-	TeacherAssignmentForm,
-	TeacherAssignmentDesc,
-	ProfileInfo
+import {
+	type UserForAdmin,
+	type TeacherAssignment,
+	type UnparseableWebhook,
+	type RunInfo,
+	type Details,
+	type CompleteRunInfo,
+	type GradingTask,
+	GradingStatus
 } from './types';
 
-const imgIndex = Math.random();
-
-function uuidv4() {
+export const uuidv4 = () => {
 	return crypto.randomUUID();
-}
+};
 
-let users: UserForAdmin[] = [
+export let users: UserForAdmin[] = [
 	{
 		id: '42',
 		created_at: '2023-03-10T14:05:44Z',
@@ -28,7 +24,8 @@ let users: UserForAdmin[] = [
 		school_email: 'toto@myschool.com',
 		provider_email: 'toto@titi.com',
 		teacher: false,
-		admin: false
+		admin: true,
+		modules: []
 	},
 	{
 		id: '43',
@@ -40,152 +37,185 @@ let users: UserForAdmin[] = [
 		school_email: 'titi@myschool.com',
 		provider_email: 'titi@titi.com',
 		teacher: false,
-		admin: false
+		admin: false,
+		modules: []
 	}
 ];
 
-let modules: TeacherModuleBacked[] = [
+export const module_not_found: ModuleBacked = {
+	id: 'not found',
+	name: 'not found',
+	start: new Date(0),
+	stop: new Date(0),
+	unlock_key: '-5454285417_46795412354554_47',
+	assignments: [],
+	locked: true
+};
+
+export const assignment_not_found: AssignmentBacked = {
+	id: 'not found',
+	type: 'not found',
+	name: 'not found',
+	start: new Date(0),
+	stop: new Date(0),
+	description: 'not found',
+	subject_url: 'not found',
+	grader_url: 'not found',
+	repository_name: 'not found',
+	factor_percentage: 0,
+	grader_run_url: 'not found',
+	linked: false,
+	locked: true,
+	locked_reason: 'not found'
+};
+
+export let modules: ModuleBacked[] = [
 	{
 		id: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
 		name: 'Java 101',
+		description: 'Lean the basics of the Java language',
 		start: new Date('2023-09-14T14:05:44Z'),
 		stop: new Date('2023-09-28T20:00:44Z'),
-		unlock_key: 'vdjjgvdjhbd-jhbd-65545khbd',
-		assignments: []
+		unlock_key: '0',
+		locked: false,
+		assignments: [
+			{
+				id: '1234',
+				type: 'EXERCISE',
+				name: 'Java basics',
+				start: new Date('2023-09-14T14:05:44Z'),
+				stop: new Date('2023-09-28T20:00:44Z'),
+				description: 'Learn the basics of Java syntax',
+				subject_url: 'toto',
+				grader_url: 'toto',
+				repository_name: 'java_exercise_1',
+				factor_percentage: 10,
+				grader_run_url: 'toto',
+				linked: true,
+				locked: false,
+				latest_run: {
+					short_commit_id: '72858c3',
+					commit_url:
+						'https://github.com/toto/java_exercise_1/commit/72858c3ea42f61aa6913b639f5f51f2dfb17eb89',
+					grading_log_url: 'https://github.com/some-runner-runner/job/machin/bidule',
+					time: new Date('2023-03-22T17:00:00Z'),
+					details: [
+						{
+							name: 'Part 1 - Compilation & Tests',
+							grade: 4,
+							max_grade: 4
+						},
+						{
+							name: 'Part 3 - Code Coverage',
+							grade: 2.43,
+							max_grade: 3,
+							messages: ['Code coverage: 60.38%, expected: > 80.0% with `mvn verify`']
+						},
+						{
+							name: 'Git (proper descriptive messages)',
+							grade: 0,
+							messages: ['OK']
+						}
+					]
+				},
+				ongoing_run: {
+					short_commit_id: '8529f2a',
+					commit_url:
+						'https://github.com/toto/java_exercise_1/commit/8529f2aaa2d9f8f35a17ae0ac40b240ae6918ad0',
+					grading_log_url: 'https://github.com/some-runner-runner/job/machin/bidule'
+				}
+			},
+			{
+				id: '4567',
+				type: 'EXERCISE',
+				name: 'Maven training',
+				start: new Date('2023-09-14T14:05:44Z'),
+				stop: new Date('2023-09-28T20:00:44Z'),
+				description: 'Learn to setup a Maven project',
+				subject_url: 'toto',
+				grader_url: 'toto',
+				repository_name: 'toto',
+				factor_percentage: 15,
+				grader_run_url: 'toto',
+				linked: false,
+				locked: true
+			},
+			{
+				id: '89',
+				type: 'PROJECT',
+				name: 'Send a marmot to space',
+				start: new Date('2023-09-14T14:05:44Z'),
+				stop: new Date('2023-09-28T20:00:44Z'),
+				description: 'A very difficult subject',
+				subject_url: 'toto',
+				grader_url: 'toto',
+				repository_name: 'space_marmot',
+				factor_percentage: 75,
+				grader_run_url: 'toto',
+				linked: true,
+				locked: false,
+				latest_run: {
+					short_commit_id: '72858c3',
+					commit_url:
+						'https://github.com/toto/java_exercise_1/commit/72858c3ea42f61aa6913b639f5f51f2dfb17eb89',
+					grading_log_url: 'https://github.com/some-runner-runner/job/machin/bidule',
+					time: new Date('2023-03-22T17:00:00Z'),
+					details: [
+						{
+							name: 'Part 1 - Put an helmet on the marmot',
+							grade: 2,
+							max_grade: 3
+						},
+						{
+							name: 'Part 2 - Send said marmot to space',
+							grade: 16.83,
+							max_grade: 17
+						}
+					]
+				}
+			}
+		]
 	},
 	{
 		id: 'e82f14b5-ea18-4950-b990-b7151cb4cddc',
 		name: 'Java 201',
+		description: 'Lean how Java is used in enterprises',
 		start: new Date('2023-09-14T14:05:44Z'),
 		stop: new Date('2023-09-28T14:05:44Z'),
-		unlock_key: '6d8c3b5b-9e68-4b25-85a1-96a000b1701d',
+		unlock_key: '1',
+		locked: true,
 		assignments: []
 	}
 ];
 
-export const getSelf = (): User => {
-	const backed_user = users[0];
-	return {
-		firstname: backed_user.firstname,
-		lastname: backed_user.lastname,
-		school_group: backed_user.school_group,
-		school_email: backed_user.school_email,
-		role: backed_user.teacher ? 'Teacher' : backed_user.admin ? 'Admin' : 'Student',
-		avatar_url: `https://thispersondoesnotexist.com/?rand_number=${imgIndex}`,
-		admin: backed_user.admin,
-		teacher: backed_user.teacher
-	};
-};
-
-export const updateProfile = (profile: ProfileInfo): ProfileInfo => {
-	const backed_user = users[0];
-	backed_user.firstname = profile.firstname || '';
-	backed_user.lastname = profile.lastname || '';
-	backed_user.school_group = profile.school_group || '';
-	backed_user.school_email = profile.school_email || '';
-	return profile;
-};
-
-export const setAdmin = (code: string): void => {
-	if (code === '0') {
-		users[0].admin = true;
+const inOptions: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
+const generateText = (length: number): string => {
+	let text: string = '';
+	for (let i = 0; i < length; i++) {
+		text += inOptions.charAt(Math.floor(Math.random() * inOptions.length));
 	}
+	return text;
 };
 
-export const getTables = (): Table[] => {
-	return [
-		{
-			name: 'table_1',
-			row_count: 4
-		},
-		{
-			name: 'table_2',
-			row_count: 13
-		}
-	];
-};
+export const unparseable_webhooks: UnparseableWebhook[] = new Array(32);
 
-export const getUsers = (): UserForAdmin[] => {
-	return users;
-};
+for (let index = 0; index < unparseable_webhooks.length; index++) {
+	const text_length = Math.random() * 170 + 30;
+	const json_value = generateText(text_length);
+	unparseable_webhooks[index] = {
+		index: index,
+		created_at: new Date('2023-09-14T14:05:44Z'),
+		origin: 'github',
+		event: 'machin',
+		payload: `{"big json payload": "${json_value}"}`,
+		error: 'some error'
+	};
+}
+
+export const grading_tasks: GradingTask[] = [];
 
 export const deleteUsers = (ids: string[]): void => {
 	users = users.filter((u) => !ids.includes(u.id));
-};
-
-export const setUsersTeacher = (ids: string[]): void => {
-	users.filter((u) => ids.includes(u.id)).forEach((u) => (u.teacher = true));
-};
-
-export const getTeacherModules = (): TeacherModuleDesc[] => {
-	return modules.map((m: TeacherModuleBacked) => ({
-		id: m.id || '',
-		name: m.name || '',
-		start: (m.start || new Date()).toLocaleString(),
-		stop: (m.stop || new Date()).toLocaleString(),
-		assignment_count: m.assignments.length
-	}));
-};
-
-export const getTeacherModule = (id: string): TeacherModule => {
-	return modules.filter((m) => m.id === id).map(teacherModuleBacked_to_teacherModule)[0];
-};
-
-const teacherModuleBacked_to_teacherModule = (m: TeacherModuleBacked): TeacherModule => {
-	return {
-		...m,
-		assignments: m.assignments.map(assignment_to_assignmentDesc)
-	};
-};
-
-const assignment_to_assignmentDesc = (assignment: TeacherAssignment): TeacherAssignmentDesc => {
-	return {
-		id: assignment.id ?? 'should be defined',
-		type: assignment.type ?? 'should be defined',
-		name: assignment.name ?? 'should be defined',
-		start: assignment.start?.toLocaleDateString() ?? 'should be defined',
-		stop: assignment.stop?.toLocaleDateString() ?? 'should be defined',
-		factor_percentage: assignment.factor_percentage ?? -1
-	};
-};
-
-export const createTeacherModule = (module_form: TeacherModuleForm): TeacherModule => {
-	const id = uuidv4();
-	const module = {
-		...module_form,
-		id: id,
-		assignments: []
-	};
-	modules.push(module);
-	return module;
-};
-
-export const updateTeacherModule = (
-	module_id: string,
-	module_form: TeacherModuleForm
-): TeacherModule => {
-	const index = modules.findIndex(({ id }) => id === module_id);
-	const updated_module = {
-		...modules[index],
-		...module_form
-	};
-	modules[index] = updated_module;
-	return teacherModuleBacked_to_teacherModule(updated_module);
-};
-
-export const updateTeacherAssignment = (
-	module_id: string,
-	assignment_id: string,
-	assignment: TeacherAssignmentForm
-): TeacherAssignment => {
-	const module = modules.filter((m) => m.id === module_id)[0];
-	const index = module.assignments.findIndex(({ id }) => id === assignment_id);
-	const updated_assignment = {
-		...module.assignments[index],
-		...assignment
-	};
-	module.assignments[index] = updated_assignment;
-	return updated_assignment;
 };
 
 export const deleteTeacherModules = (ids: string[]): void => {
@@ -199,34 +229,80 @@ export const deleteTeacherAssignments = (module_id: string, assignment_ids: stri
 	);
 };
 
-export const createTeacherAssignment = (
-	module_id: string,
-	assignment_form: TeacherAssignmentForm
-): TeacherAssignment => {
-	const id = uuidv4();
-	const assignment = {
-		...assignment_form,
-		id: id
-	};
-	const module = modules.filter((m) => m.id === module_id)[0];
-	module.assignments.push(assignment);
-	return assignment;
+export type ModuleState = {
+	locked: boolean;
 };
 
-export const getTeacherAssignment = (
-	module_id: string,
-	assignment_id: string
-): TeacherAssignment => {
-	return modules
-		.filter((m) => m.id === module_id)[0]
-		.assignments.filter((a) => a.id === assignment_id)[0];
-};
-
-type TeacherModuleBacked = {
+export type TeacherModule = {
 	id?: string;
 	name?: string;
+	description?: string;
 	start?: Date;
 	stop?: Date;
 	unlock_key?: string;
-	assignments: TeacherAssignment[];
+	assignments: AssignmentBacked[];
+};
+
+export type ModuleBacked = TeacherModule & ModuleState;
+
+export type AssignmentState = {
+	linked: boolean;
+	locked: boolean;
+	locked_reason?: string;
+	latest_run?: CompleteRunInfo;
+	ongoing_run?: RunInfo;
+	latest_details?: Details[];
+	status?: GradingStatus;
+};
+
+export type AssignmentBacked = TeacherAssignment & AssignmentState;
+
+export type HavingAssignments = {
+	assignments: AssignmentWithGrade[];
+};
+
+export type AssignmentWithGrade = {
+	factor_percentage?: number;
+	grade?: number;
+	latest_run?: CompleteRunInfo;
+};
+
+export const gradeModule = (m: HavingAssignments): number => {
+	return Number(
+		m.assignments
+			.map((a) => {
+				return (gradeAssignment(a).normalized_grade * (a.factor_percentage ?? 0)) / 100;
+			})
+			.reduce((acc, grade) => acc + grade, 0)
+			.toFixed(2)
+	);
+};
+
+export const gradeAssignment = (
+	a: AssignmentWithGrade
+): { grade: number; max_grade: number; normalized_grade: number } => {
+	if (a.grade !== undefined) {
+		return { grade: a.grade, max_grade: 20, normalized_grade: a.grade };
+	} else if (a.latest_run !== undefined) {
+		let grade = 0;
+		let max_grade = 0;
+		for (const detail of a.latest_run.details) {
+			grade += detail.grade;
+			if (detail.max_grade !== undefined) {
+				max_grade += detail.max_grade;
+			}
+		}
+		const normalized_grade = Number(((grade * 20) / max_grade).toFixed(2));
+		return {
+			grade,
+			max_grade,
+			normalized_grade
+		};
+	} else {
+		return {
+			grade: 0,
+			max_grade: 0,
+			normalized_grade: 0
+		};
+	}
 };
