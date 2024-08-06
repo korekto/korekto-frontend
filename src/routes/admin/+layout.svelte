@@ -7,6 +7,13 @@
 		<li class="nav-item">
 			<a
 				class="nav-link active"
+				aria-current={$page.url.pathname === '/admin/general' ? 'page' : undefined}
+				href="/admin/general">General</a
+			>
+		</li>
+		<li class="nav-item">
+			<a
+				class="nav-link active"
 				aria-current={$page.url.pathname === '/admin/users' ? 'page' : undefined}
 				href="/admin/users">Users</a
 			>

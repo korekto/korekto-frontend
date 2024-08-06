@@ -63,3 +63,15 @@ export const getGradingTasks = async (
 		data: items
 	};
 };
+
+export const recreateDb = async () => {
+	console.log('DB recreated, hourray !');
+};
+
+export const rerunMigrations = async () => {
+	console.log('Migrations re-runned, yay !');
+};
+
+export const dropTable = async (tableName: string) => {
+	console.log(`Deleted table ${tableName}, meh :/`);
+};
