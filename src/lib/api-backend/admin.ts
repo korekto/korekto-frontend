@@ -3,7 +3,7 @@ import type { GradingTask, Page, Table, UnparseableWebhook, UserForAdmin } from 
 import { loadUser } from './../stores';
 
 export const getTables = async (): Promise<Table[]> => {
-	return await axiosAPI.get<Table[]>('/fapi/admin/table').then((res) => res.data);
+	return await axiosAPI.get<Table[]>('/fapi/admin/db/table').then((res) => res.data);
 };
 
 export const getUsers = async (): Promise<UserForAdmin[]> => {
@@ -58,4 +58,29 @@ export const getGradingTasks = async (
 	return await axiosAPI
 		.get<Page<GradingTask>>(`/fapi/admin/grading_tasks?page=${page}&per_page=${per_page}`)
 		.then((res) => res.data);
+};
+
+export const recreateDb = async () => {
+	await axiosAPI({
+		method: 'delete',
+		url: '/fapi/admin/db'
+	});
+};
+
+export const rerunMigrations = async () => {
+	await axiosAPI({
+		method: 'delete',
+		url: '/fapi/admin/db/migrations'
+	});
+};
+
+export const dropTable = async (tableName: string) => {
+	await axiosAPI({
+		method: 'delete',
+		url: `/fapi/admin/db/table`,
+		data: tableName,
+		headers: {
+			'Content-Type': 'text/plain'
+		}
+	});
 };
