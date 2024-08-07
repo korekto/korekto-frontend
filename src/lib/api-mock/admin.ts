@@ -1,4 +1,11 @@
-import type { GradingTask, Page, Table, UnparseableWebhook, UserForAdmin } from './../types';
+import type {
+	AdminMetadata,
+	GradingTask,
+	Page,
+	Table,
+	UnparseableWebhook,
+	UserForAdmin
+} from './../types';
 import * as mock from './../mock';
 import { loadUser } from './../stores';
 
@@ -74,4 +81,14 @@ export const rerunMigrations = async () => {
 
 export const dropTable = async (tableName: string) => {
 	console.log(`Deleted table ${tableName}, meh :/`);
+};
+
+export const getMetadata = async (): Promise<AdminMetadata> => {
+	return {
+		runner: {
+			app_id: 123456,
+			app_name: 'Mocked runner app',
+			accessible_repositories: ['toto', 'titi']
+		}
+	};
 };

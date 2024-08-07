@@ -1,5 +1,12 @@
 import { axiosAPI } from './../axios';
-import type { GradingTask, Page, Table, UnparseableWebhook, UserForAdmin } from './../types';
+import type {
+	AdminMetadata,
+	GradingTask,
+	Page,
+	Table,
+	UnparseableWebhook,
+	UserForAdmin
+} from './../types';
 import { loadUser } from './../stores';
 
 export const getTables = async (): Promise<Table[]> => {
@@ -83,4 +90,8 @@ export const dropTable = async (tableName: string) => {
 			'Content-Type': 'text/plain'
 		}
 	});
+};
+
+export const getMetadata = async (): Promise<AdminMetadata> => {
+	return await axiosAPI.get<AdminMetadata>('/fapi/admin').then((res) => res.data);
 };

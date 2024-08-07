@@ -242,3 +242,13 @@ export type StudentGrades = {
 	grades: number[];
 	total: number;
 };
+
+export type AdminMetadata = {
+	runner: RunnerMetadata;
+};
+
+export type RunnerMetadata = {
+	app_id: number;
+	app_name: string;
+	accessible_repositories: string[];
+};
