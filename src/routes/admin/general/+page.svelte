@@ -31,6 +31,23 @@
 			><Icon icon="openmoji:cross-mark" inline /> Recreate DB
 		</button>
 	</div>
+
+	{#await api.getMetadata()}
+		<p class="p-white">...loading metadata</p>
+	{:then metadata}
+		<h4>Runner</h4>
+		<div class="mb-3 row">
+			App ID: {metadata.runner.app_id}
+		</div>
+		<div class="mb-3 row">
+			App Name: {metadata.runner.app_name}
+		</div>
+		<div class="mb-3 row">
+			Accessible repos: {metadata.runner.accessible_repositories}
+		</div>
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 </div>
 
 <style>
