@@ -20,7 +20,8 @@
 		grader_url: yup.string().required(),
 		repository_name: yup.string().required(),
 		factor_percentage: yup.number().required(),
-		grader_run_url: yup.string().required()
+		grader_run_url: yup.string().required(),
+		hidden_by_teacher: yup.boolean().required()
 	});
 
 	let errors: YupErrors = {};
@@ -42,6 +43,15 @@
 		</select>
 		{#if errors.type}<div class="error">Required</div>
 			>{/if}
+	</div>
+	<div class="row">
+		<label class="col-input" for="hidden">Hidden</label>
+		<input
+			class="col-auto"
+			type="checkbox"
+			id="hidden"
+			bind:checked={form.values.hidden_by_teacher}
+		/>
 	</div>
 	<div class="row">
 		<label class="col-input" for="name">Name</label>

@@ -6,7 +6,9 @@
 
 	export let data;
 
-	let assignment: TeacherAssignment = {};
+	let assignment: TeacherAssignment = {
+		hidden_by_teacher: false
+	};
 
 	const onSave = async (a: TeacherAssignmentForm) => {
 		let assignment = await api.createTeacherAssignment(data.moduleId, a);

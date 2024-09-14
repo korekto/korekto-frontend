@@ -87,6 +87,7 @@ export type TeacherAssignment = {
 	repository_url?: string;
 	factor_percentage?: number;
 	grader_run_url?: string;
+	hidden_by_teacher: boolean;
 };
 
 export type TeacherAssignmentForm = {
@@ -100,6 +101,7 @@ export type TeacherAssignmentForm = {
 	repository_name?: string;
 	factor_percentage?: number;
 	grader_run_url?: string;
+	hidden_by_teacher: boolean;
 };
 
 export type ModuleRedeemResponse = {

@@ -32,8 +32,9 @@ const moduleBacked_to_ModuleDesc = (m: mock.ModuleBacked): ModuleDesc => {
 		name: m.name ?? 'should be defined',
 		start: m.start ?? new Date(0),
 		stop: m.stop ?? new Date(0),
-		linked_repo_count: m.assignments.filter((a) => a.linked).length,
-		assignment_count: m.assignments.length,
+		linked_repo_count: m.assignments.filter((a) => !a.hidden_by_teacher).filter((a) => a.linked)
+			.length,
+		assignment_count: m.assignments.filter((a) => !a.hidden_by_teacher).length,
 		grade: mock.gradeModule(m),
 		latest_update: m.start,
 		locked: m.locked
@@ -51,7 +52,9 @@ export const getModule = async (module_id: string): Promise<Module> => {
 		latest_update: m.start,
 		locked: false,
 		source_url: 'some source url',
-		assignments: m.assignments.map(assignmentBacked_to_AssignmentDesc)
+		assignments: m.assignments
+			.filter((a) => !a.hidden_by_teacher)
+			.map(assignmentBacked_to_AssignmentDesc)
 	};
 };
 
