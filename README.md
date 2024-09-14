@@ -20,6 +20,15 @@ One should do
 Otherwise, NPM will be untangled in dependencies resolution from downloaded or referenced past versions, even if
 relations do not exist in the new ones.
 
+## Mocked avatars
+
+https://i.pravatar.cc/
+https://thispersondoesnotexist.com
+
+## Design system
+
+https://www.skeleton.dev
+
 ## Search icons
 
 https://icon-sets.iconify.design/

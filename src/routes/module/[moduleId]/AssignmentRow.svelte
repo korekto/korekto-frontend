@@ -12,7 +12,7 @@
 		<div class="icon black">
 			{#if assignment.locked}
 				<Icon icon="mingcute:lock-line" inline />
-			{:else if assignment.type === 'project'}
+			{:else if assignment.type === 'PROJECT'}
 				<Icon icon="ph:student-duotone" inline />
 			{:else}
 				<Icon icon="ion:book" inline />
