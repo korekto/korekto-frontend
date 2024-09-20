@@ -237,7 +237,7 @@
 							{:else}
 								{detail.name}: {detail.grade} / {detail.max_grade}
 							{/if}
-							{#if detail.messages !== undefined && detail.grade !== 0}
+							{#if detail.messages}
 								<ul>
 									{#each detail.messages as message}
 										<li>{message}</li>
