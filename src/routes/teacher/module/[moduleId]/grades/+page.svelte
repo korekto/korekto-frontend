@@ -48,6 +48,11 @@
 			])
 		);
 	};
+
+	const avg = (numbers: number[]) => {
+		const sum = numbers.reduce((a, b) => a + b, 0);
+		return (sum / numbers.length || 0).toFixed(2);
+	};
 </script>
 
 <div class="text-column">
@@ -99,6 +104,20 @@
 					</tr>
 				{/each}
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2">{gradesInfo.students.length} students</td>
+					<th scope="col">Avg</th>
+					{#each gradesInfo.assignments as assignment, index}
+						<th scope="col"
+							>{assignment.short_name}: {avg(
+								gradesInfo.students.map((s) => s.grades[index])
+							)}</th
+						>
+					{/each}
+					<th scope="col">Total: {avg(gradesInfo.students.map((s) => s.total))}</th>
+				</tr>
+			</tfoot>
 		</table>
 	{:catch error}
 		<p style="color: red">{error.message}</p>
