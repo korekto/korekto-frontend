@@ -241,6 +241,7 @@ export type StudentGrades = {
 	first_name: string;
 	last_name: string;
 	school_email: string;
+	provider_login: string;
 	grades: number[];
 	total: number;
 };

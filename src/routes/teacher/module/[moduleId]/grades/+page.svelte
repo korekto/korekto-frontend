@@ -11,6 +11,7 @@
 	const downloadCsv = (gradesInfo: ModuleGradesSummary) => {
 		const csv = to_csv(
 			[
+				'Provider Login',
 				'First Name',
 				'Last Name',
 				'Email',
@@ -18,6 +19,7 @@
 				'Total'
 			],
 			gradesInfo.students.map((s) => [
+				s.provider_login,
 				s.first_name,
 				s.last_name,
 				s.school_email,
@@ -33,6 +35,7 @@
 	const downloadXlsx = (gradesInfo: ModuleGradesSummary) => {
 		download_xlsx(
 			[
+				'Provider Login',
 				'First Name',
 				'Last Name',
 				'Email',
@@ -40,6 +43,7 @@
 				'Total'
 			],
 			gradesInfo.students.map((s) => [
+				s.provider_login,
 				s.first_name,
 				s.last_name,
 				s.school_email,
@@ -80,6 +84,7 @@
 		<table class="table">
 			<thead>
 				<tr>
+					<th scope="col">Provider Login</th>
 					<th scope="col">First Name</th>
 					<th scope="col">Last Name</th>
 					<th scope="col">Email</th>
@@ -94,6 +99,7 @@
 			<tbody>
 				{#each gradesInfo.students as student}
 					<tr>
+						<th scope="row">{student.provider_login}</th>
 						<th scope="row">{student.first_name}</th>
 						<th scope="row">{student.last_name}</th>
 						<th scope="row">{student.school_email}</th>

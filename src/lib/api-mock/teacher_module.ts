@@ -89,6 +89,7 @@ export const getGrades = async (module_id: string): Promise<ModuleGradesSummary>
 		first_name: u.firstname,
 		last_name: u.lastname,
 		school_email: u.school_email,
+		provider_login: u.provider_login,
 		grades: index === 0 ? user0_grades : other_user_grades,
 		total: index === 0 ? gradeModule(module) : 0
 	}));
