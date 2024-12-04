@@ -112,7 +112,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="2">{gradesInfo.students.length} students</td>
+					<td colspan="3">{gradesInfo.students.length} students</td>
 					<th scope="col">Avg</th>
 					{#each gradesInfo.assignments as assignment, index}
 						<th scope="col"
