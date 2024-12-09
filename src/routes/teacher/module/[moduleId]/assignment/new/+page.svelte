@@ -7,7 +7,8 @@
 	export let data;
 
 	let assignment: TeacherAssignment = {
-		hidden_by_teacher: false
+		hidden_by_teacher: false,
+		grader_cli_v2: false
 	};
 
 	const onSave = async (a: TeacherAssignmentForm) => {

@@ -88,6 +88,7 @@ export type TeacherAssignment = {
 	factor_percentage?: number;
 	grader_run_url?: string;
 	hidden_by_teacher: boolean;
+	grader_cli_v2: boolean;
 };
 
 export type TeacherAssignmentForm = {
@@ -102,6 +103,7 @@ export type TeacherAssignmentForm = {
 	factor_percentage?: number;
 	grader_run_url?: string;
 	hidden_by_teacher: boolean;
+	grader_cli_v2: boolean;
 };
 
 export type ModuleRedeemResponse = {
