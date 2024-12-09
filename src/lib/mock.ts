@@ -65,6 +65,7 @@ export const assignment_not_found: AssignmentBacked = {
 	factor_percentage: 0,
 	grader_run_url: 'not found',
 	hidden_by_teacher: false,
+	grader_cli_v2: false,
 	linked: false,
 	locked: true,
 	locked_reason: 'not found'
@@ -93,6 +94,7 @@ export let modules: ModuleBacked[] = [
 				factor_percentage: 10,
 				grader_run_url: 'toto',
 				hidden_by_teacher: false,
+				grader_cli_v2: false,
 				linked: true,
 				locked: false,
 				latest_run: {
@@ -140,6 +142,7 @@ export let modules: ModuleBacked[] = [
 				factor_percentage: 15,
 				grader_run_url: 'toto',
 				hidden_by_teacher: false,
+				grader_cli_v2: false,
 				linked: false,
 				locked: true
 			},
@@ -156,6 +159,7 @@ export let modules: ModuleBacked[] = [
 				factor_percentage: 75,
 				grader_run_url: 'toto',
 				hidden_by_teacher: false,
+				grader_cli_v2: false,
 				linked: true,
 				locked: false,
 				latest_run: {

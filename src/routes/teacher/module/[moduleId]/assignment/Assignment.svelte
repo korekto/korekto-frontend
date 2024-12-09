@@ -21,7 +21,8 @@
 		repository_name: yup.string().required(),
 		factor_percentage: yup.number().required(),
 		grader_run_url: yup.string().required(),
-		hidden_by_teacher: yup.boolean().required()
+		hidden_by_teacher: yup.boolean().required(),
+		grader_cli_v2: yup.boolean().required()
 	});
 
 	let errors: YupErrors = {};
@@ -83,6 +84,15 @@
 		<label class="col-input" for="grader_url">Grader URL</label>
 		<input class="col-auto" type="text" id="grader_url" bind:value={form.values.grader_url} />
 		{#if errors.grader_url}<div class="error">Required</div>{/if}
+	</div>
+	<div class="row">
+		<label class="col-input" for="grader_cli_v2">Grader CLI v2</label>
+		<input
+			class="col-auto"
+			type="checkbox"
+			id="grader_cli_v2"
+			bind:checked={form.values.grader_cli_v2}
+		/>
 	</div>
 	<div class="row">
 		<label class="col-input" for="repository_name">Repository name</label>
